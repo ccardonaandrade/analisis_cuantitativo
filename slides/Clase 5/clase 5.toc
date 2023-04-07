@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Diagrama de Caja}{2}{0}{1}
+\beamer@sectionintoc {2}{Muestras y Poblaciones}{4}{0}{2}
+\beamer@sectionintoc {3}{Distribuci\IeC {\'o}n Muestral}{7}{0}{3}
+\beamer@sectionintoc {4}{Probabilidad y Distribuci\IeC {\'o}n Muestral}{25}{0}{4}
+\beamer@sectionintoc {5}{Intervalos de Confianza}{31}{0}{5}

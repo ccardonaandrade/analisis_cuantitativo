@@ -1,0 +1,629 @@
+\documentclass{beamer}
+\usepackage{lmodern}
+\usepackage[labelformat=simple,
+labelsep=period,
+font={footnotesize},     %scriptsize, footnotesize, small, normalsize
+labelfont=bf,
+width=0.9\textwidth,
+justification=justified,
+singlelinecheck=false
+]{caption}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{qtree}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{pgfplots,pgfplotstable}
+\usepgfplotslibrary{statistics}
+\usepackage[T1]{fontenc}
+\usepackage{bera}
+\usepackage{multirow}
+\usepackage{pstricks-add}
+\usepackage[capposition=top]{floatrow}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{float}
+\usepackage[labelformat=empty]{caption}
+\usepackage[justification=centering]{caption}
+\setbeamersize{text margin left=5pt,text margin right=25pt}
+
+\captionsetup[table]{labelfont={color=Brown}}
+\tikzset{
+	invisible/.style={opacity=0,text opacity=0}, % added text opacity to fix problems when nodes' text is opaque
+	visible on/.style={alt=#1{}{invisible}},
+	alt/.code args={<#1>#2#3}{%
+		\alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+	},
+}
+\pgfplotsset{compat=1.7}
+    \setbeamertemplate{headline}
+    {
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+        \usebeamerfont{section in head/foot} \insertsectionhead\hspace*{2ex}
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
+        \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+      \end{beamercolorbox}}%
+      \vskip0pt%
+    }
+
+\setbeamertemplate{footline}
+{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.65\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.05\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}}%
+        \vskip0pt%
+    }
+    
+    \pgfplotsset{compat=1.7}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%% PAra el diagrama de la diapostiva 10
+    \usepackage{smartdiagram}
+    \usetikzlibrary{shapes.geometric} % required in the preamble
+    \smartdiagramset{
+    	module minimum width=3cm,
+    	module minimum height=1cm,
+    	text width=4.5cm,
+    	circular distance=3cm,
+    }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \def\angle{0}
+    \def\radius{2}
+    \def\cyclelist{{"orange","blue","red","green"}}
+    \newcount\cyclecount \cyclecount=-1
+    \newcount\ind \ind=-1	
+    
+    
+    \newcounter{saveenumi}
+    \newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+    \newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+    
+    \resetcounteronoverlays{saveenumi}
+    \tikzset{mynode/.style={inner sep=2pt,fill,outer sep=0,circle}}
+
+\title{Análisis Cuantitativo I}
+\subtitle{Introducción a las pruebas de hipótesis}
+\author[Carlos Cardona]{Carlos Cardona Andrade}
+\institute[URosario]{Universidad del Rosario}
+\date{31 de marzo de 2017}
+
+
+\begin{document}
+
+\frame{\titlepage}
+\begin{frame}{Quiz}
+\begin{itemize}
+\justifying
+\item Un laboratorio farmacéutico afirma que el número de horas que un medicamento de
+fabricación propia tarda en curar una determinada enfermedad sigue una distribución normal con
+desviación estándar igual a 8. Se toma una muestra de 100 enfermos a los que se les administra
+el medicamento y se observa que la media de horas que tardan en curarse es igual a 32.
+\item Encontrar un intervalo de confianza, con un nivel de confianza del 99\%, para la media del
+número de horas que tarda en curar el medicamento.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%% INTRO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introducción}
+\begin{frame}{Introducción}
+\begin{itemize}
+\justifying
+\item Usualmente es imposible (y poco práctico) para un investigador, observar cada uno de los individuos en una población.
+\item Considerando esto, se toma una muestra con el propósito de responder preguntas acerca de la población.
+\item Una prueba de hipótesis es un método estadístico para llevar a cabo inferencias sobre la población de interés.
+\item La prueba de hipótesis es uno de los procedimientos más comunes para realizar inferencia estadística. De hecho, en lo que resta del curso se harán pruebas de hipótesis en una variedad de situaciones y aplicaciones diferentes. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item Aunque ciertos detalles de una prueba de hipótesis cambia de una situación a otra, el proceso general se mantiene constante. En esta clase se introduce este proceso general.
+\item Para efectuar una prueba de hipótesis, es necesario combinar las técnicas estadísticas que se han desarrollado en clases anteriores (z-score, probabilidad y distribuciones muestrales). 
+\end{itemize}
+\begin{block}{Prueba de Hipótesis}
+Es un método estadístico que usa una muestra para evaluar una hipótesis acerca de una población.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item En términos simples, la lógica detrás del procedimiento para una prueba de hipótesis es la siguiente:
+\end{itemize}
+\begin{enumerate}
+	\justifying
+	\item Primero que todo, se establece una hipótesis acerca de una población. Normalmente, la hipótesis es sobre un parámetro poblacional. Por ejemplo, podríamos hipotetizar que los adultos colombianos ganan un promedio de $\mu=3,5$ kgs entre el 24 y 31 de diciembre de cada año.
+\item Antes de seleccionar una muestra, se utiliza la hipótesis para predecir las características que la muestra podría tener. Siguiendo el ejemplo anterior, al predecir que la ganancia de peso promedio para la población es $\mu=3,5$ kgs entonces, se puede concluir que la muestra debería tener una media \emph{cercana} a $3,5$.
+\seti
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}
+\conti
+\justifying
+\item Luego, se obtiene una muestra de la población. Por ejemplo, se podría seleccionar una muestra de $n=200$ adultos colombianos  y medir el cambio de peso promedio entre ambas fechas.
+\item Finalmente, se comparan los datos de la muestra con la predicción que fue hecha de la hipótesis. Si la media muestral es consistente con la predicción, se puede concluir que la hipótesis es razonable. Sin embargo, si existe una gran discrepancia entre los datos y la predicción, se concluye que la hipótesis es errada. 
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle{La situación básica}
+	\begin{columns}
+		\begin{column}{.35\textwidth}
+			\centering
+			\only<1>{Población Conocida}\\[1ex]
+			\scalebox{0.45}{
+				\begin{tikzpicture}
+				% define normal distribution function 'normaltwo'
+				\def\normaltwo{\x,{4*1/exp(((\x-3)^2)/2)}}
+				
+				% input y parameter
+				\def\y{4.4}
+				\def\z{3.01}
+				% this line calculates f(y)
+				\def\fy{4*1/exp(((\y-3)^2)/2)}
+				\def\fz{4*1/exp(((\z-3)^2)/2)}
+				% Shade orange area underneath curve.
+
+				
+				% Draw and label normal distribution function
+				\draw[color=blue,domain=0:6] plot (\normaltwo) node[right] {};
+				
+				% Add dashed line dropping down from normal.
+
+				\draw[dashed] ({\z},{\fz}) -- ({\z},0) node[below] {$\mu=3,5 \quad \sigma=1$};
+				% Optional: Add axis labels
+				\draw (-.2,2.5) node[left] {$f_{Peso}$};
+				\draw (3,-.5) node[below] {$Peso$};
+				
+				% Optional: Add axes
+				\draw[->] (0,0) -- (6.2,0) node[right] {};
+				\draw[->] (0,0) -- (0,5) node[above] {};
+				
+				\end{tikzpicture}}
+		\end{column}
+				\begin{column}{.15\textwidth}
+
+
+\begin{center}
+\begin{table}[H]
+\begin{tabular}{cc}
+\multicolumn{2}{c}{Tratamiento} \\
+\multicolumn{2}{c}{$\rightarrow$} \\
+\multicolumn{2}{c}{Condición} \\
+\end{tabular}
+\end{table}
+\end{center}
+	\end{column}
+		\begin{column}{.4\textwidth}
+			\centering
+			\only<1>{Población Desconocida}\\[1ex]
+			\scalebox{0.45}{
+				\begin{tikzpicture}
+				% define normal distribution function 'normaltwo'
+				\def\normaltwo{\x,{4*1/exp(((\x-3)^2)/2)}}
+				
+				% input y parameter
+				\def\x{1.6}
+				\def\y{6}
+				\def\z{3.01}
+				% this line calculates f(y)
+				\def\fx{4*1/exp(((\x-3)^2)/2)}
+				\def\fy{4*1/exp(((\y-3)^2)/2)}
+				\def\fz{4*1/exp(((\z-3)^2)/2)}
+	
+				% Draw and label normal distribution function
+				\draw[color=blue,domain=0:6] plot (\normaltwo) node[right] {};
+				
+				% Add dashed line dropping down from normal.
+
+				\draw[dashed] ({\z},{\fz}) -- ({\z},0) node[below] {$\mu=? \quad \sigma=1$};
+				% Optional: Add axis labels
+				\draw (-.2,2.5) node[left] {$f_{Peso}$};
+				\draw (3,-.5) node[below] {$Peso$};
+				
+				% Optional: Add axes
+				\draw[->] (0,0) -- (6.2,0) node[right] {};
+				\draw[->] (0,0) -- (0,5) node[above] {};
+				
+				\end{tikzpicture}}
+			
+		\end{column}
+	\end{columns}
+\begin{itemize}
+	\justifying
+\item Se asume que el parámetro poblacional es conocido para todos los individuos (condición) o antes de llevar a cabo el experimento (tratamiento).
+\item En el caso de la gráfica anterior, también se asume que el efecto del tratamiento es igual para todos los individuos.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%% EJEMPLO %%%%%%%%%%%%%%%%
+\begin{frame}{National Cultures and Soccer Violence}
+	{\sc Miguel, Saiegh \& Satyanath (2008)}
+	\begin{itemize}
+\justifying
+\item ¿Pueden algunos actos de violencia ser explicados por la cultura de una sociedad?
+\item Los autores aprovechan el experimento natural ofrecido por la presencia de miles de jugadores internacionales en las 5 grandes ligas europeas.
+\item ¿Cómo medir comportamiento violento en el fútbol? $\Rightarrow$ Tarjetas amarillas y rojas.
+\item ¿Cómo medir la historia de violencia de un país? $\Rightarrow$ Años bajo conflicto civil. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item Supongamos que se quiere evaluar si los jugadores, cuyo país de origen ha sufrido más de 5 años de conflicto civil, se comportan de manera diferente dentro del campo de juego.
+\item Para la población general de jugadores, el número de tarjetas amarillas por temporada se distribuye normal con media $\mu=4$ y desviación estándar de $\sigma=2,5$.
+\item El plan es tomar una muestra de $n=35$ jugadores que cumplan la condición de conflicto y comparar el promedio de tarjetas amarillas por temporada. 
+\item Si la media de la muestra es, de manera notable, diferente de la media de la población de jugadores de las 5 grandes ligas europeas, se puede concluir que el conflicto tiene algún efecto sobre el comportamiento violento de los jugadores. 
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%  Pasos para una prueba de hipótesis %%%%%%%%
+\section{Pruebas de Hipótesis}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+{\sc 1. Establecer las hipótesis}
+\begin{itemize}
+	\justifying
+\item Previamente se establecieron dos hipótesis, las cuales están en términos de los parámetros poblacionales.
+\item La primera, y más importante, de las dos hipótesis es la \emph{hipótesis nula}.
+\item Esta hipótesis afirma que el tratamiento/condición no tuvo efecto. En general, establece que no se presenta cambio, diferencia, efecto alguno (De ahí proviene el nombre \emph{nulo}).
+\item Se identifica con el símbolo $H_0$ (La $H$ es por hipótesis y el $0$ indica que es la hipótesis de efecto cero).
+\item En nuestro caso:
+
+\end{itemize}
+$$H_0 \, : \mu_{conflicto}=4$$
+
+\end{frame}
+
+
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 1. Establecer las hipótesis}
+\begin{itemize}
+	\justifying
+\item La segunda hipótesis es el opuesto de la hipótesis nula, y se denomina la \emph{hipótesis alterativa} ($H_1$). Esta hipótesis indica que el tratamiento/condición tiene un efecto sobre la variable de interés.
+\item Para el ejemplo, la hipótesis alternativa es que el conflicto en el país de origen tiene un efecto sobre el número de tarjetas amarillas que recibe un jugador y, por lo tanto, habrá un cambio en su media.
+$$H_1 \, : \mu_{conflicto}\neq4$$
+\item Noten que no se está fijando una dirección del efecto. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 2. Fijar el criterio de decisión}
+\begin{itemize}
+	\justifying
+	\item Para formalizar el proceso de decisión, se utiliza la hipótesis nula para predecir el tipo de media muestral resultante.
+	\item Específicamente, se quiere evaluar cuáles medias muestrales son consistentes con la hipótesis nula y cuáles no lo son.
+	\item Para determinar cuáles valores están cerca a 4 y cuáles son muy diferentes, se examinan todas las medias muestrales posibles si la hipótesis nula es cierta.
+	\item Con respecto al ejemplo, esta es la distribución de medias muestrales para $n=35$. De acuerdo a la hipótesis nula, la distribución está centrada en $\mu=4$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 2. Fijar el criterio de decisión}
+\begin{itemize}
+\justifying
+\item La distribución de medias muestrales se divide en dos secciones:
+\begin{enumerate}
+\item Las medias muestrales que son probables de obtener si $H_0$ es cierta, es decir, las medias muestrales cercanas a la hipótesis nula.
+\item Las medias muestrales que son poco probables de obtener si $H_0$ es cierta, es decir, medias muestrales que son muy diferentes de la hipótesis nula. 
+\end{enumerate}
+\end{itemize}
+	\begin{center}
+		\scalebox{0.6}{
+			\begin{tikzpicture}
+			% define normal distribution function 'normaltwo'
+			\def\normaltwo{\x,{4*1/exp(((\x-3)^2)/2)}}
+			
+			% input y parameter
+			\def\x{0}
+			\def\y{1}
+			\def\w{5.02}
+			\def\q{6}
+			\def\z{3.01}
+			
+			
+			% this line calculates f(y)
+			\def\fx{4*1/exp(((\x-3)^2)/2)}
+			\def\fy{4*1/exp(((\y-3)^2)/2)}
+			\def\fz{4*1/exp(((\z-3)^2)/2)}
+			\def\fw{4*1/exp(((\w-3)^2)/2)}
+			\def\fq{4*1/exp(((\q-3)^2)/2)}
+			% Shade orange area underneath curve.
+			\fill [fill=orange!60] (\x,0) -- plot[domain=\x:\y] (\normaltwo) -- ({\y},0) -- cycle;
+			
+			\fill [fill=orange!60] (\w,0) -- plot[domain=\w:\q] (\normaltwo) -- ({\q},0) -- cycle;
+			% Draw and label normal distribution function
+			\draw[color=blue,domain=0:6] plot (\normaltwo) node[right] {};
+			
+			% Add dashed line dropping down from normal.
+			\draw[dashed] ({\x},{\fx}) -- ({\x},0) node[below] {};
+			\draw[dashed] ({\y},{\fy}) -- ({\y},0) node[below] {};
+			\draw[dashed] ({\z},{\fz}) -- ({\z},0) node[below] {$\mu\, de \, H_0$};
+			\draw[dashed] ({\w},{\fw}) -- ({\w},0) node[below] {};
+			\draw[dashed] ({\q},{\fq}) -- ({\q},0) node[below] {};
+			% Optional: Add axis labels
+			\draw (-.2,2.5) node[left] {$f_{Tarjetas \, Amarillas}$};
+			\draw (3,-.5) node[below] {$Tarjetas \, Amarillas$};
+			
+			% Optional: Add axes
+			\draw[->] (0,0) -- (6.2,0) node[right] {};
+			\draw[->] (0,0) -- (0,5) node[above] {};
+			
+			\end{tikzpicture}
+		}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 2. Fijar el criterio de decisión}
+\begin{itemize}
+\justifying
+\item Para encontrar los límites que separan las medias de alta probabilidad de las de baja probabilidad, se tiene que definir exactamente qué significa ``alta'' y ``baja'' probabilidad.
+\item Esto se logra al seleccionar una probabilidad específica , la cual se conoce como \emph{nivel de significancia} (se denota con $\alpha$), para la prueba de hipótesis.
+\item El valor $\alpha$ es una probabilidad pequeña que se utiliza para identificar muestras de poca probabilidad.
+\item Por convención, los valores alfa más comunes son $\alpha=0.05$ y $\alpha=0.01$. Por ejemplo, si usamos $\alpha=0.05$, separamos el 5\% de las medias más improbables (valores extremos) del 95\% de las medias muestrales más probables (valores centrales).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 2. Fijar el criterio de decisión}
+	\begin{itemize}
+		\justifying
+	\item Los valores extremos que son poco probables, definidos por el nivel de significancia, constituyen lo que se conoce como \emph{región crítica}.
+	\item Estos valores son inconsistentes con la hipótesis nula. También se pueden interpretar como valores muestrales que proveen evidencia convincente de que el tratamiento/condición tienen algún efecto.
+	\item Al igual que con los intervalos de confianza, para determinar la ubicación exacta de los límites se utilizan el $\alpha$ y la tabla de la normal para encontrar el z-score \emph{crítico}.
+	\item Para un valor $\alpha=0.05$, los límites separan el 5\% extremo del 95\% del medio. Este 5\% se divide entre las dos colas de la distribución, dejando 2.5\% en cada extremo ($Z=1.96$).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 3. Calcular los estadísticos muestrales}
+	\begin{itemize}
+		\justifying
+\item Lo anterior debe hacerse antes de la recolección de los datos para asegurar una evaluación honesta y objetiva de los datos.
+\item Luego de la recolección es posible comparar la media muestral con la hipótesis nula. Esta comparación se logra al calcular el z-score que ubica la media muestral respecto a la media poblacional de $H_0$.
+\item El z-score para una media muestral se obtiene de la siguiente manera:
+$$Z=\dfrac{\bar{X}-\mu}{\sigma_{\bar{X}}}$$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 4. Tomar una decisión}
+	\begin{itemize}
+\justifying
+\item En este paso, se utiliza el z-score del paso anterior para tomar una decisión acerca de la hipótesis nula de acuerdo al criterio seleccionado en el paso 2. Existen dos posibles resultados:
+
+	\end{itemize}
+	\begin{enumerate}
+		\item La media muestral se ubica en la región crítica. Por definición, un valor muestral en esta región es poco probable si $H_0$ es cierta. Se puede concluir que la muestra no es consistente con la hipótesis nula, por lo tanto, nuestra decisión es rechazarla. 
+		\seti
+	\end{enumerate}
+	\begin{itemize}
+\justifying
+\item Por ejemplo, si la media de nuestra muestra es $\bar{X}=5,2$, el error estándar de la media muestral es:
+$$\sigma_{\bar{X}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{2,5}{\sqrt{25}}=\dfrac{2,5}{5}=0.5$$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 4. Tomar una decisión}
+\begin{itemize}
+\justifying
+\item Así, una media muestral $\bar{X}=5,2$ produce un z-score de:
+$$Z=\dfrac{5.2-4}{0,5}=\dfrac{1,2}{0,5}=2,4$$
+\item Para un $\alpha=0.05$, este z-score está por encima del valor crítico de $1,96$.
+\item Dado que el z-score se encuentra en la región crítica, la hipótesis nula es rechazada y se concluye que el conflicto en el país de origen tiene un efecto sobre el comportamiento de los jugadores.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos para una prueba de hipótesis}
+	{\sc 4. Tomar una decisión}
+	\begin{enumerate}
+		\conti
+		\justifying
+\item La segunda posibilidad es que la media muestral no se ubique en la región crítica. En este caso, la media se encuentra cerca a la media poblacional especificada por la hipótesis nula. 
+	\end{enumerate}
+\begin{itemize}
+\justifying
+\item Si la media muestral es $\bar{X}=4,9$, se obtendría un z-score:
+$$Z=\dfrac{4,9-4}{0,5}=\dfrac{0,9}{0,5}=1,8$$
+\item Este z-score no se encuentra en la región crítica. Los datos no proveen suficiente evidencia de que $H_0$ es falsa, por lo tanto, {\bf no se puede rechazar} la hipótesis nula y la conclusión es que el conflicto en el país de origen no parece tener efecto alguno.
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%% ERROR TIPO I y TIPO II %%%%%%%%%%%
+\section{Error Tipo I \& Tipo II}
+\begin{frame}{Incertidumbre y errores en las pruebas de hipótesis}
+\begin{itemize}
+\justifying
+\item Las pruebas de hipótesis son un procedimiento inferencial, lo cual significa que se utiliza información limitada.
+\item Específicamente, las muestras proveen al investigador de información incompleta de la población. 
+\item Considerando que las pruebas de hipótesis utilizan muestras para concluir algo sobre una población, existe la posibilidad de que la conclusión final sea equivocada.
+\item En las pruebas de hipótesis se pueden cometer dos tipos de errores:
+\begin{enumerate}
+\item Rechazar una hipótesis que es verdadera (Tipo I)
+\item No rechazar una hipótesis que es falsa (Tipo II)
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Error Tipo I}
+	\begin{itemize}
+		\justifying
+\item Es posible que los datos lleven a rechazar la hipótesis nula cuando en realidad no existe diferencia por la condición o el tratamiento no tuvo efecto.
+\item Si el investigador, de manera aleatoria, selecciona una de las muestras extremas de la distribución , la prueba de hipótesis concluirá que la diferencia es considerable aun cuando NO exista efecto alguno. 
+\item En el ejemplo del comportamiento de los futbolistas, supongamos que se selecciona una muestra de $n=35$ jugadores, los cuáles por otras razones fueran agresivos  y tuviera más tarjetas amarillas que el promedio.
+\item Bajo este escenario, aún bajo la ausencia de conflicto en el país de origen, estos jugadores estarían por encima del promedio de amarillas.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\justifying
+\item Esta selección de una muestra extrema, llevaría a concluir que el conflicto tiene relación con el comportamiento agresivo de los futbolistas cuando en realidad no es así.
+\item Esto puede conllevar a consecuencias serias. Por ejemplo, considerar que un medicamento fue efectivo cuando en realidad no lo es.
+\item El error Tipo I ocurre cuando el investigador, sin saberlo, selecciona una muestra extrema. Afortunadamente, las pruebas de hipótesis están diseñadas para minimizar el riesgo que esto ocurra.
+\item Al pensar en la distribución muestral de medias y con un $\alpha=0,05$, se sabe que sólo 5\% de las muestras tienen medias en la región crítica.
+\item Por lo tanto, {\bf $\alpha$ es la probabilidad de que ocurra el error Tipo I}. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Error Tipo II}
+	\begin{itemize}
+		\justifying
+\item El error Tipo II ocurre cuando se falla en rechazar la hipótesis nula que es falsa.
+\item Esto puede suceder cuando la media muestral no se ubica en la región crítica a pesar de que la condición/tratamiento si tienen efecto.
+\item Se presenta cuando, por ejemplo, el tratamiento tuvo efecto pero la magnitud de ese efecto es muy pequeña. Por lo tanto, dado que la media muestral no es, sustancialmente, diferente de la población original se concluye que no existen diferencias.
+
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\justifying
+\item Las consecuencias de cometer el error Tipo II no son tan graves como las del Tipo I. En general, el error tipo II significa que los datos de investigación no presentan los resultados esperados.
+\item A diferencia del error Tipo I, no existe una probabilidad exacta de cometer el error Tipo II.
+\item En cambio, esta probabilidad es una función que depende de otras variables. Sin embargo, se representa por medio de la letra $\beta$.
+\item En resumen:
+	\end{itemize}
+\begin{center}
+\begin{table}[H]
+\scalebox{0.8}{
+	
+	\begin{tabular}{ccc|c|}
+ & &  \multicolumn{2}{c}{Situación Actual} \\  \cline{3-4}
+ & & \multicolumn{1}{|c|}{$H_0$ (V)} & $H_0$ (F) \\ \cline{2-4}
+\multirow{2}{*}{Decisión} & \multicolumn{1}{|c}{Rechazar $H_0$} & \multicolumn{1}{|c|}{Tipo I} & Decisión Correcta \\ \cline{2-4}
+& \multicolumn{1}{|c|}{No Rechazar $H_0$}  & Decisión Correcta & Tipo II\\ \cline{2-4}
+
+	\end{tabular}}
+\end{table}
+\end{center}
+\end{frame}
+
+\begin{frame}{Seleccionar $\alpha$}
+\begin{itemize}
+\justifying
+\item Como hemos visto $\alpha$ cumple dos propósitos:
+\begin{enumerate}
+\item Define los límites de la región crítica al definir los resultados poco probables.
+\item Determina la probabilidad que suceda el error Tipo I.
+\end{enumerate}
+\item Al seleccionar un valor para $\alpha$ al inicio de la prueba, se influencian ambas funciones.
+\item Por este motivo, existe un dilema entre minimizar el riesgo del error Tipo I y rechazar la hipótesis nula. Se podría pensar en un $\alpha$ muy pequeño para evitar el error pero ¿qué sucede con la región crítica?
+\item Para un valor pequeño, la prueba requiere mucha evidencia para rechazar la hipótesis nula. Es necesario mantener un balance entre ambas funciones.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%% p-value $$$$$$$$$$$$$$$$$$$$$$
+\section{Más sobre pruebas de hipótesis}
+\begin{frame}{El valor $p$}
+\begin{itemize}
+\justifying
+\item Como sabemos, un z-score tiene una probabilidad asociada dada la forma de la distribución normal.
+\item Por ende, la decisión de una prueba de hipótesis puede basarse tanto en el z-score como en su probabilidad asociada ($p$).
+\item En el ejemplo anterior, se encontró que el $Z=1,8$, resultado que no es inusual, es decir, tiene una alta probabilidad relativa de ocurrir ($p>0.05$).
+\item Recuerden que se rechaza la hipótesis nula con valores con baja probabilidad de ocurrencia (extremos), ubicados en la región crítica en las colas de la distribución.
+\item Considerando esto último, un resultado rechazará la hipótesis nula si $p\leq0.05$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item Por ejemplo, para un valor $z=2$, sabemos que $p=0.023$. Si $\alpha=0.05$, se rechaza la hipótesis nula dado que $0.023<0.05$.
+\item Esto sucede para un nivel de significancia del 5\%, ¿qué sucede si este cambia a 1\%?
+\item El valor $p$ es la probabilidad que el resultado ocurra si $H_0$ es verdadera, siendo también la probabilidad que se presente el error Tipo I.
+\end{itemize}
+
+\begin{center}
+Si $Z_{\bar{X}} \geq Z_{\alpha} \rightarrow p \leq \alpha$ : Se rechaza $H_0$ \\
+Si $Z_{\bar{X}} < Z_{\alpha} \rightarrow p > \alpha$ : No se rechaza $H_0$
+\end{center}
+\begin{itemize}
+	\item Un resultado es {\bf estadísticamente significativo} si es poco probable que ocurra, es decir, es suficiente para rechazar la hipótesis nula.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%% PRUEBA A UNA COLA %%%%%%%%%%%%%%%%
+\section{Prueba de hipótesis a una cola}
+\begin{frame}{Pruebas de hipótesis a una cola}
+\begin{itemize}
+\justifying
+\item Usualmente, el investigador empieza con una predicción sobre la dirección en que la condición/tratamiento afecta los individuos.
+\item Por ejemplo, un programa especial de entrenamiento mejora el desempeño de los estudiantes o el consumo de alcohol aumenta el tiempo de reacción.
+\item En estas situaciones, es posible establecer la hipótesis estadística de una manera que incorpore la predicción en $H_0$ y $H_1$. El resultado es una prueba \emph{direccional} o lo que se conoce comúnmente como prueba a una cola.
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item Retomemos el ejemplo sobre violencia y fútbol. Las tarjetas amarilla se distribuye normal con $\mu=4$ y $\sigma=2,5$. Para esta stiuación en particular, se cree que los jugadores provenientes de países en conflicto son más violentos en el campo de juego.
+\item El investigador obtiene una media muestral $\bar{X}=5$ para los $n=25$ jugadores que seleccionó.¿Es este resultado suficiente para concluir que el conflicto tiene algún efecto?
+\item Al igual que para la prueba a dos colas, el primer paso es definir las dos hipótesis. En este caso:
+
+$$H_0: \mu_{conflicto}\leq 4$$ 
+$$H_1: \mu_{conflicto}>4$$
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\justifying
+\item La distribución muestral de medias tendrá media $\mu=4$ y error estándar $\sigma_{\bar{X}}=\dfrac{2.5}{\sqrt{25}}=\dfrac{2,5}{5}=0,5$.
+\item La región crítica estará ubicada en su totalidad a la derecha de la distribución dado que se espera un efecto positiva del conflicto.
+\item El nivel de significancia $\alpha$ no se divide entre ambas colas, por lo tanto, es necesario buscar el 5\% a la derecha. Al buscar en la tabla de la normal, se encuentra que el $Z_{\alpha}=1,65$.
+\item Para esta prueba se requieren dos cambios entonces:
+\begin{enumerate}
+\item Incluir la predicción al definir las hipótesis.
+\item La región crítica se ubica totalmente en una de las colas de la distribución.
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\justifying
+\item El resto del procedimiento es exactamente igual al anterior. Se compara el z-score crítico con el z de la distribución.
+$$Z=\dfrac{5-4}{0,5}=2 \quad p=0.023$$
+\item Como $Z>Z_{\alpha}$ o $p\leq0.05$, se rechaza la $H_0$ y se concluye que provenir de un país en conflicto aumenta significativamente el comportamiento violento de los futbolistas.
+\item La principal diferencia entre ambos tipos de prueba es el criterio que usan para rechazar la $H_0$. La prueba a una cola permite rechazar la hipótesis nula cuando la diferencia entre la población y la muestra es pequeña relativamente. 
+\item Por otro lado, la prueba a dos colas requiere una diferencia grande independientemente de la dirección.  
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\justifying
+Hace cinco años la tasa de peticiones promedio d e todos los 1567 neurocirujanos en la OMS fue 19.7 peticiones. Se obtienen los registros actuales de una muestra de 130 neurocirujanos y la tasa de peticiones es de $\bar{X}=$20.9 con una desviación estándar de $s_X=$5.7 peticiones. ¿Ha aumentado la tasa de peticiones promedio de los neurocirujanos de la OMS desde hace cinco años a un nivel de confianza del 95\%?
+
+\pause
+$$H_0 \, : \mu_{hoy}\leq19.7$$
+$$H_1 \, : \mu_{hoy}>19.7$$
+
+$$s_{\bar{X}}=\dfrac{5.7}{\sqrt{130}}=0.5 \quad Z_{\bar{X}}=\dfrac{20.9-19.7}{0.5}=2.4 \quad p=0.008$$
+$$Z_{\bar{X}}=2.4>Z_{\alpha}=1.64 \quad p<\alpha$$
+\begin{center}
+Se rechaza $H_0$
+\end{center}
+\end{frame}
+\end{document}

@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Introducci\IeC {\'o}n}{3}{0}{1}
+\beamer@sectionintoc {2}{Pruebas de Hip\IeC {\'o}tesis}{10}{0}{2}
+\beamer@sectionintoc {3}{Error Tipo I \& Tipo II}{20}{0}{3}
+\beamer@sectionintoc {4}{M\IeC {\'a}s sobre pruebas de hip\IeC {\'o}tesis}{26}{0}{4}
+\beamer@sectionintoc {5}{Prueba de hip\IeC {\'o}tesis a una cola}{28}{0}{5}

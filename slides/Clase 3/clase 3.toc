@@ -1,0 +1,4 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Medidas de dispersi\IeC {\'o}n}{2}{0}{1}
+\beamer@sectionintoc {2}{Valor Z}{13}{0}{2}

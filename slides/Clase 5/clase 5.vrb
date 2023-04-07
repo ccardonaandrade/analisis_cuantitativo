@@ -1,0 +1,8 @@
+\frametitle{Muestras y Poblaciones}
+\begin{itemize}
+\justifying
+\item En clases anteriores se introdujo el concepto de valor z (\emph{z-score}) y probabilidad.
+\item Para cualquier valor seleccionado de una población, es posible hallar el z-score. El cual describe la ubicación del valor dentro de la distribución.
+\item Si la distribución es normal, también es posible determinar la probabilidad (proporción) de obtener cualquier valor individual.
+\item Ambos conceptos están limitados (hasta ahora!) a situaciones en las cuales la muestra es un valor único $n=1$.
+\end{itemize}

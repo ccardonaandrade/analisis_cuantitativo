@@ -1,0 +1,8 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Repaso}{3}{0}{1}
+\beamer@sectionintoc {2}{Dise\IeC {\~n}os de Investigaci\IeC {\'o}n}{4}{0}{2}
+\beamer@sectionintoc {3}{El problema de la Medici\IeC {\'o}n}{13}{0}{3}
+\beamer@sectionintoc {4}{Problemas al medir conceptos de inter\IeC {\'e}s}{17}{0}{4}
+\beamer@sectionintoc {5}{Distribuci\IeC {\'o}n de Frecuencia}{28}{0}{5}
+\beamer@sectionintoc {6}{Medidas de Tendencia Central}{37}{0}{6}
