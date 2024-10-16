@@ -1,0 +1,45 @@
+---
+title: "Analítica de Datos"
+subtitle: "Parcial II"
+date: Octubre 16, 2024
+lang: es
+format: 
+  html:
+    theme: OHI-styles.scss
+    title-block-banner-color: "#E3F1F2"
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    smooth-scroll: true
+---
+  
+  
+<br>
+  
+Antes de empezar a resolver el parcial, lea todas las preguntas y, de acuerdo a su criterio, abra las diapositivas y scripts que considere útiles. Nadie debería tener abierto el correo luego de 5 minutos a menos que sea para enviar el parcial con todas las respuestas. **El uso de ChatGPT (o cualquier otra plataforma de IA) no está permitido.** Todas las respuestas deben ir en un documento PDF creado en Quarto o en un R Script con las respuestas como comentarios. Como se mencionó anteriormente, aquellos que entreguen las respuestas en Quarto recibirán un +0.3 en el parcial.
+
+Para aquellos que van a entregar el documento en Quarto, les sugiero primero escribir el código en un R Script, corroborar que se está ejecutando correctamente y, luego, pasar las respuestas al documento `.qmd`. No incluyan el código de las gráficas que utilicen en el documento final; para el resto de las respuestas, es obligatorio incluirlo.
+
+Las respuestas serán evaluadas en función de la claridad, precisión y calidad del análisis. Los gráficos y tablas representarán sólo la mitad del puntaje. Tienen 2 horas para resolver el parcial, por lo que hay tiempo suficiente para acortar cualquier respuesta. Cada punto vale 0,5.
+
+Éxitos!
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+# Acá van todos los paquetes necesarios para correr el código
+library(fontawesome)
+library(tidyverse)
+library(openintro)
+library(scales)
+library(ggmosaic)
+library(tidymodels)
+```
+      
+{{< include /sections/0-preliminares.qmd >}}
+    
+{{< include /sections/1-descriptiva.qmd >}}
+
+{{< include /sections/2-inferencial.qmd >}}

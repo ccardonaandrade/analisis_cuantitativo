@@ -1,0 +1,155 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("code-compare", fill = "#2e3175", a11y = "sem")` Inferencial Part {#inferencial}
+
+### Question 5
+
+Propose a situation in which you need to calculate a confidence interval for one of the variables, calculate the interval, and provide the corresponding analysis that answers that question.
+  
+### Question 6
+
+The boss of the team ask you to fit a model for predicting raises (`percent_incr`) from salaries (`annual_salary`). We'll call this model `raise_1_fit`. The model follows the following equation:
+
+$$\widehat{\text{Percent Increase}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Annual Salary}$$
+
+
+Which of the following is the best interpretation of the slope coefficient?
+
+a.  For every additional \$1,000 of annual salary, the model predicts the raise to be higher, on average, by 1.59%.
+b.  For every additional \$1,000 of annual salary, the raise goes up by 0.0159%.
+c.  For every additional \$1,000 of annual salary, the model predicts the raise to be higher, on average, by 0.0159%.
+d.  For every additional \$1,000 of annual salary, the model predicts the raise to be higher, on average, by 1.83%.
+
+
+### Question 7
+
+Does the model `raise_1_fit` satisfy the conditions of linearity, constant variance, and normality of errors? Use graphs to support your answer.
+
+
+### Question 8
+
+Two of your colleagues propose two different models to predict `percent_incr`. The first model, which they call `model_1`, makes the estimation using annual salary and a dummy variable for whether the worker has a salaried contract, as follows:
+
+$$\widehat{\text{Percent Increase}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Annual Salary}+\hat{\beta_2}\times \text{Salaried}$$
+
+On the other hand, the second model called `model_2`, would use dummy variable for each category in `performance_rating` following:
+
+$$\widehat{\text{Percent Increase}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Annual Salary}+\hat{\beta_2}\times \text{Poor}+\hat{\beta_3}\times \text{Succesful} +\hat{\beta_4}\times \text{Top}$$
+
+Which of the two models would you choose, and what would be your criterion?
+
+### Question 9
+
+The tidy model output for the `raise_2_fit` model you fit is shown below.
+
+```{r}
+#| label: raise-salary-rating-fit
+#| echo: false
+
+raise_2_fit <- linear_reg() |>
+  fit(percent_incr ~ annual_salary + performance_rating, data = blizzard_salary)
+
+tidy(raise_2_fit)
+```
+
+When your teammate sees this model output, they remark "The coefficient for `performance_ratingSuccessful` is negative, that's weird. I guess it means that people who get successful performance ratings get lower raises." How would you respond to your teammate?
+
+
+### Question 10
+
+Suppose we fit a model to predict `percent_incr` from `annual_salary` and `salary_type`. A tidy output of the model is shown below.
+
+```{r}
+#| label: raise-salary-type-fit
+#| echo: false
+
+raise_3_fit <- linear_reg() |>
+  fit(percent_incr ~ annual_salary + salary_type, data = blizzard_salary)
+
+tidy(raise_3_fit)
+```
+
+Which of the following visualizations represent this model? Explain your reasoning.
+
+```{r}
+#| label: fig-raise-salary-type
+#| echo: false
+#| warning: false
+#| layout-ncol: 2
+#| fig-cap: |
+#|   Visualizations of the relationship between percent increase, annual 
+#|   salary, and salary type
+#| fig-subcap:
+#|   - Option 1
+#|   - Option 2
+#|   - Option 3
+#|   - Option 4
+
+ggplot(blizzard_salary, aes(x = annual_salary, y = percent_incr, color = salary_type)) +
+  geom_point(aes(shape = salary_type), alpha = 0.4) +
+  geom_smooth(aes(linetype = salary_type), method = "lm", se = FALSE, fullrange = TRUE) +
+  labs(
+    x = "Annual salary",
+    y = "Percent increase",
+    color = "Salary type",
+    linetype = "Salary type",
+    shape = "Salary type"
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+ggplot(blizzard_salary, aes(x = annual_salary, y = percent_incr, color = salary_type)) +
+  geom_point(aes(shape = salary_type), alpha = 0.4) +
+  geom_smooth(aes(linetype = salary_type), se = FALSE, fullrange = TRUE) +
+  labs(
+    x = "Annual salary",
+    y = "Percent increase"
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+ggplot(blizzard_salary, aes(x = annual_salary, y = percent_incr, color = salary_type)) +
+  geom_point(aes(shape = salary_type), alpha = 0.4, show.legend = FALSE) +
+  geom_abline(intercept = 1.24, slope = 0.0000137, color = "#E87d72", linewidth = 1, linetype = "solid") +
+  geom_abline(intercept = 1.24+0.913, slope = 0.0000137, color = "#56bcc2", linewidth = 1, linetype = "dashed") +
+  labs(
+    x = "Annual salary",
+    y = "Percent increase",
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1))+
+  theme_minimal() 
+
+ggplot(blizzard_salary, aes(x = annual_salary, y = percent_incr, color = salary_type)) +
+  geom_point(alpha = 0.4, show.legend = FALSE) +
+  geom_abline(intercept = 1.24, slope = 0.0000137, color = "#56bcc2", linewidth = 1, linetype = "dashed") +
+  geom_abline(intercept = 1.24+0.913, slope = 0.0000137,  color = "#E87d72", linewidth = 1) +
+  labs(
+    x = "Annual salary",
+    y = "Percent increase",
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal() 
+```
+
+
+
+### Bonus (0.5)
+
+The cases 'Denial' and 'Fortune Telling' in the graph below illustrate two common problems when estimating a regression line. Explain in your own words what these two problems consist of.
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: "center"
+#| out-width: "100%"
+library(knitr)
+knitr::include_graphics("images/type_line.jpg")
+```

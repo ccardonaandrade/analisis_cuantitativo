@@ -1,0 +1,82 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("cubes", fill = "#2e3175", a11y = "sem")` Parte Descriptiva {#descriptiva}
+  
+### Pregunta 1
+
+@fig-blizzard-hist-1 y @fig-blizzard-hist-2 muestran las distribuciones de los salarios anuales por tipo de salario. Ambas figuras muestran los mismos datos, con los paneles organizados en filas y en columnas. ¿Cuál de las dos es mejor para comparar la mediana de los salarios anuales para trabajadores por hora o con contrato? Explique su criterio a la hora de elegir.
+
+::: {#fig-blizzard-hist}
+
+```{r}
+#| label: fig-blizzard-hist-1
+#| fig-cap: Opción 1
+#| fig-width: 10
+#| fig-asp: 0.5
+#| echo: false
+
+ggplot(blizzard_salary, aes(x = salario_anual)) +
+  geom_histogram(binwidth = 10000, color = "white") +
+  facet_wrap(~tipo_contrato, ncol = 1) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"), breaks = seq(0, 250000, 25000)) +
+  labs(
+    x = "Salario Anual (en USD)",
+    y = "Frecuencia"
+  ) + theme_minimal()
+```
+
+```{r}
+#| label: fig-blizzard-hist-2
+#| fig-cap: Opción 2
+#| fig-width: 10
+#| fig-asp: 0.3
+#| echo: false
+
+ggplot(blizzard_salary, aes(x = salario_anual)) +
+  geom_histogram(binwidth = 10000, color = "white") +
+  facet_wrap(~tipo_contrato, nrow = 1) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"), breaks = seq(0, 250000, 25000)) +
+  labs(
+    x = "Salario Anual (en USD)",
+    y = "Frecuencia"
+  ) + theme_minimal()
+```
+
+Distribución de los salarios anuales para empleados de Blizzard
+
+:::
+
+### Pregunta 2
+
+Supongamos que uno de sus compañeros escribió un código como parte de su análisis de los datos. Luego imprimió los resultados que se muestran a continuación. Desafortunadamente, el valor indicado con _____ se borró de la impresión.
+
+```         
+# A tibble: 2 x 3
+  tipo_contrato     salario_anual_promedio salario_anual_mediana
+  <chr>                              <dbl>                 <dbl>
+1 Contrato Fijo                     90472.                83381 
+2 Contrato por Hora                 63003.                _____
+```
+
+¿Cuál de los siguientes valores es el mejor estimado para el número faltante?
+
+a.  30,000
+b.  50,000
+c.  80,000
+d.  100,000
+
+### Pregunta 3
+
+¿Cuál de las distribuciones de salario anual tiene una desviación estándar mayor?
+
+a.  Trabajadores con nivel bueno en su performance
+b.  Trabajadores con nivel malo en su performance
+c.  Más o menos tienen la misma
+
+### Pregunta 4
+
+Creen una nueva variable `aumento` que sea el incremento en el salario que tendrían los trabajadores luego de 2020 (Se multiplicaría el salario anual por`(incr_porcentual/100)`). Uno de sus colegas le pide graficar la dispersión entre las dos variables. ¿Cuál sería su conclusión sobre la relación entre el salario base y el incremento basándose en la gráfica?
+
+

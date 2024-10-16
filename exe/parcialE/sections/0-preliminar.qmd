@@ -1,0 +1,50 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("gear", fill = "#2e3175", a11y = "sem")` Preliminares {#preliminares}
+  
+### Context
+
+```{r}
+#| label: blizzard-data-prep
+#| echo: false
+
+blizzard_salary <- blizzard_salary |>
+  mutate(
+    annual_salary = case_when(
+      salary_type == "week" ~ current_salary * 52,
+      salary_type == "hour" ~ current_salary * 40 * 52,
+      TRUE ~ current_salary
+    ),
+    performance_rating = if_else(performance_rating == "Developing", "Poor", performance_rating)
+  ) |>
+  filter(salary_type != "week") |>
+  mutate(
+    salary_type = if_else(salary_type == "hour", "Hourly", "Salaried")
+  ) |>
+  filter(!is.na(annual_salary)) |>
+  select(percent_incr, salary_type, annual_salary, performance_rating) |>
+  mutate(annual_salary = ifelse(annual_salary < 20000, 25000, annual_salary))
+
+```
+
+In 2021, Blizzard Entertainment initiated a data analysis project on employee salary increases. This was in response to growing concerns about compensation practices in the video game industry, triggered by an anonymous Excel file that revealed internal salaries. The goal was to identify potential disparities in salary adjustments across different employee groups and performance levels (Source: [Blizzard Workers Share Salaries in Revolt Over Pay](https://www.bloomberg.com/news/articles/2020-08-03/blizzard-workers-share-salaries-in-revolt-over-wage-disparities){target="_blank"}).
+
+Assume you are a member of this team. The name of the data frame used for this analysis is `blizzard_salary` and the relevant variables are:
+
+-   `percent_incr`: Raise given in July 2020, as percent increase with values ranging from 1 (1% increase) to 21.5 (21.5% increase)
+
+-   `salary_type`: Type of salary, with levels `Hourly` and `Salaried`
+
+-   `annual_salary`: Annual salary, in USD, with values ranging from \$25,000 to \$216,856.
+
+-   `performance_rating`: Most recent review performance rating, with levels `Poor`, `Successful`, `High`, and `Top`. The `Poor` level is the lowest rating and the `Top` level is the highest rating.
+
+The top ten rows of `blizzard_salary` are shown below:
+
+```{r}
+#| echo: false
+blizzard_salary |>
+  select(percent_incr, salary_type, annual_salary, performance_rating)
+```

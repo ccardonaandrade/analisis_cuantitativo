@@ -1,0 +1,78 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("cubes", fill = "#2e3175", a11y = "sem")` Parte Descriptiva {#descriptiva}
+  
+### Pregunta 1
+
+
+Los dos gráficos abajo muestran las distribuciones de los salarios anuales por rating de performance. ¿Cuál de las dos es mejor para visualizar la relación entre salarios anuales para los trabajadores dependiendo de su desempeño? Explique su criterio a la hora de elegir.
+
+```{r}
+#| label: fig-salary-performance-rating
+#| echo: false
+#| layout-ncol: 2
+#| fig-cap: Distribución de los tipos de contrato por rating en performance
+#| fig-subcap: 
+#|   - Opción 1
+#|   - Opción 2
+
+blizzard_salary |>
+  drop_na(tipo_contrato, nivel_performance) |>
+  mutate(nivel_performance = fct_relevel(nivel_performance, "Malo", "Normal", "Bueno", "Excelente")) |>
+  ggplot(aes(x = tipo_contrato, fill = fct_rev(nivel_performance))) +
+  geom_bar() +
+  scale_fill_viridis_d() +
+  labs(
+    x = "Tipo de Contrato",
+    y = "Frecuencia",
+    fill = "Nivel de Performance"
+  ) + theme_minimal()
+
+blizzard_salary |>
+  drop_na(tipo_contrato, nivel_performance) |>
+    mutate(nivel_performance = fct_relevel(nivel_performance, "Malo", "Normal", "Bueno", "Excelente")) |>
+  ggplot(aes(x = tipo_contrato, fill = fct_rev(nivel_performance))) +
+  geom_bar(position = "fill") +
+  scale_fill_viridis_d() +
+  labs(
+    x = "Tipo de Contrato",
+    y = "Proporción",
+    fill = "Nivel de Performance"
+  ) + theme_minimal()
+```
+
+### Pregunta 2
+
+Supongamos que uno de sus compañeros escribió un código como parte de su análisis de los datos. Luego imprimió los resultados que se muestran a continuación. Desafortunadamente, el valor indicado con _____ se borró de la impresión.
+
+```         
+# A tibble: 5 x 3
+  nivel_performance salario_anual_promedio salario_anual_mediana
+  <fct>                               <dbl>                 <dbl>
+1 Excelente                          89287.                 74000
+2 Bueno                              92982.                 89200
+3 Normal                             _____                  70000
+4 Malo                              112344.                116000
+5 NA                                 85681.                 79000
+```
+
+¿Cuál de los siguientes valores es el mejor estimado para el número faltante?
+
+a.  30,000
+b.  50,000
+c.  80,000
+d.  100,000
+
+### Pregunta 3
+
+¿Cuál de las distribuciones de salario anual tiene una desviación estándar mayor?
+
+a.  Trabajadores con contrato por hora
+b.  Trabajadores con contrato fijo
+c.  Más o menos tienen la misma
+
+### Pregunta 4
+
+Creen una nueva variable `aumento` que sea el incremento en el salario que tendrían los trabajadores luego de 2020 (se multiplicaría el salario anual por`(incr_porcentual/100)`). Uno de sus colegas le pide graficar la dispersión entre las dos variables. ¿Cuál sería su conclusión sobre la relación entre el salario base y el incremento basándose en la gráfica?

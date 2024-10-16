@@ -1,0 +1,82 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("cubes", fill = "#2e3175", a11y = "sem")` Descriptive Part {#descriptiva}
+  
+### Question 1
+
+@fig-blizzard-hist-1 and @fig-blizzard-hist-2 show the distributions of annual salaries of hourly and salaried workers. The two figures show the same data, with the facets organized across rows and across columns. Which of the two figures is better for comparing the median annual salaries of hourly and salaried workers. Explain your reasoning.
+
+::: {#fig-blizzard-hist}
+```{r}
+#| label: fig-blizzard-hist-1
+#| echo: false
+#| fig-cap: Option 1
+#| fig-width: 10
+#| fig-asp: 0.5
+
+ggplot(blizzard_salary, aes(x = annual_salary)) +
+  geom_histogram(binwidth = 10000, color = "white") +
+  facet_wrap(~salary_type, ncol = 1) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"), breaks = seq(0, 250000, 25000)) +
+  labs(
+    x = "Annual salary (in USD)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| label: fig-blizzard-hist-2
+#| echo: false
+#| fig-cap: Option 2
+#| fig-width: 10
+#| fig-asp: 0.3
+
+ggplot(blizzard_salary, aes(x = annual_salary)) +
+  geom_histogram(binwidth = 10000, color = "white") +
+  facet_wrap(~salary_type, nrow = 1) +
+  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"), breaks = seq(0, 250000, 25000)) +
+  labs(
+    x = "Annual salary (in USD)",
+    y = "Count"
+  )+
+  theme_minimal()
+```
+
+Distribution of annual salaries of Blizzard employees
+:::
+
+### Question 2
+
+Suppose your teammate wrote the following code as part of their analysis of the data. They then printed out the results shown below. Unfortunately one of the number got erased from the printout, it's indicated with _____ below.
+
+```         
+# A tibble: 2 x 3
+  salary_type mean_annual_salary median_annual_salary
+  <chr>                    <dbl>                <dbl>
+1 Hourly                  63003.               54246.
+2 Salaried                90183.               _____
+```
+Which of the following is the best estimate for that erased value?
+
+a.  30,000
+b.  50,000
+c.  80,000
+d.  100,000
+
+
+### Question 3
+
+Which annual salary distribution has a higher standard deviation?
+
+a.  High performance workers
+b.  Poor performance workers
+c.  Roughly the same
+
+### Question 4
+
+Create a new variable `increase` that represents the increase in salary that workers would have after 2020 (the annual salary would be multiplied by `(percent_incr/100)`). One of your colleagues asks you to plot the scatterplot between the two variables. What would be your conclusion about the relationship between the base salary and the increase based on the graph?
+
+

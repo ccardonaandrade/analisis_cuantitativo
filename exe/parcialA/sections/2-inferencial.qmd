@@ -1,0 +1,148 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("code-compare", fill = "#2e3175", a11y = "sem")` Parte Inferencial {#inferencial}
+
+### Pregunta 5
+
+Proponga una situación en la que tenga que calcular un intervalo de confianza de alguna de las variables, calcule el intervalo y haga el análisis correspondiente que responda a esa pregunta.
+  
+### Pregunta 6
+
+El jefe del equipo de trabajo sugiere que los salarios anuales (`salario_anual`) son el primer predictor de los incrementos (`incr_porcentual`). El modelo `aumento_1` estima la siguiente ecuación:
+
+$$\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}$$
+
+
+¿Cual de las siguientes interpretaciones es la mejor para el coeficiente de la pendiente?
+
+a. Por cada \$1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 1.59% en promedio.
+b. Por cada \$1,000 de salario anual, el aumento salarial sube por 0.0159%.
+c. Por cada \$1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 0.0159% en promedio.
+d. Por cada \$1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 1.83% en promedio.
+
+### Pregunta 7
+
+¿El modelo `aumento_1` cumple las condiciones de linealidad, varianza constante y normalidad de los errores? Utilice gráficas para sustentar su respuesta. 
+
+
+### Pregunta 8
+
+Dos de sus colegas proponen dos modelos diferentes para predecir `incr_porcentual`. El primer modelo, al que llaman `modelo_1`, hace la estimación usando salario anual y una variable dummy si el trabajador tiene un contrato fijo de la siguiente manera:
+
+$$\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}+\hat{\beta_2}\times \text{Contrato Fijo}$$
+
+Por otro lado, el segundo modelo llamado `modelo_2`, utilizaría variables dummy para las categorías de `nivel_performance` estimando:
+
+$$\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}+\hat{\beta_2}\times \text{Malo}+\hat{\beta_3}\times \text{Normal} +\hat{\beta_4}\times \text{Excelente}$$
+
+¿Cuál de los dos modelos elegiría usted y cuál sería su criterio?
+
+### Pregunta 9
+
+```{r}
+#| echo: false
+
+raise_2_fit <- linear_reg() |>
+  fit(incr_porcentual ~ salario_anual + nivel_performance, data = blizzard_salary)
+
+tidy(raise_2_fit)
+```
+
+Cuando uno de sus colegas ve el resultado de la estimación, le comenta que "el coeficiente para `nivel_performanceNormal` es negativo, qué raro! Supongo que significa que la gente cuando tiene un peformance `Normal` reciben un aumento menor." ¿Cómo le respondería a su colega?
+
+### Pregunta 10
+
+```{r}
+#| label: raise-salary-type-fit
+#| echo: false
+
+raise_3_fit <- linear_reg() |>
+  fit(incr_porcentual ~ salario_anual + tipo_contrato, data = blizzard_salary)
+
+tidy(raise_3_fit)
+```
+
+
+¿Cuál de las siguientes gráficas explica el modelo estimado? Explique su respuesta.
+
+```{r}
+#| label: fig-raise-salary-type
+#| warning: false
+#| echo: false
+#| layout-ncol: 2
+#| fig-cap: |
+#|   Visualición de la relación entre incremento porcentual, salario 
+#|   anual y tipo de contrato
+#| fig-subcap:
+#|   - Opción 1
+#|   - Opción 2
+#|   - Opción 3
+#|   - Opción 4
+
+ggplot(blizzard_salary, aes(x = salario_anual, y = incr_porcentual, color = tipo_contrato)) +
+  geom_point(aes(shape = tipo_contrato), alpha = 0.4) +
+  geom_smooth(aes(linetype = tipo_contrato), method = "lm", se = FALSE, fullrange = TRUE) +
+  labs(
+    x = "Salario Anual",
+    y = "Incremento Porcential",
+    color = "Tipo de Contrato",
+    linetype = "Tipo de Contrato",
+    shape = "Tipo de Contrato"
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1))+
+  theme_minimal() +
+  theme(legend.position = "top")
+
+ggplot(blizzard_salary, aes(x = salario_anual, y = incr_porcentual, color = tipo_contrato)) +
+  geom_point(aes(shape = tipo_contrato), alpha = 0.4) +
+  geom_smooth(aes(linetype = tipo_contrato), se = FALSE, fullrange = TRUE) +
+  labs(
+    x = "Salario Anual",
+    y = "Incremento Porcentual"
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1))+
+  theme_minimal() +
+  theme(legend.position = "top")
+
+ggplot(blizzard_salary, aes(x = salario_anual, y = incr_porcentual, color = tipo_contrato)) +
+  geom_point(aes(shape = tipo_contrato), alpha = 0.4, show.legend = FALSE) +
+  geom_abline(intercept = 1.24, slope = 0.0000137, color = "#E87d72", linewidth = 1, linetype = "solid") +
+  geom_abline(intercept = 1.24+0.913, slope = 0.0000137, color = "#56bcc2", linewidth = 1, linetype = "dashed") +
+  labs(
+    x = "Salario Anual",
+    y = "Incremento Porcentual",
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal()
+
+ggplot(blizzard_salary, aes(x = salario_anual, y = incr_porcentual, color = tipo_contrato)) +
+  geom_point(alpha = 0.4, show.legend = FALSE) +
+  geom_abline(intercept = 1.24, slope = 0.0000137, color = "#56bcc2", linewidth = 1, linetype = "dashed") +
+  geom_abline(intercept = 1.24+0.913, slope = 0.0000137,  color = "#E87d72", linewidth = 1) +
+  labs(
+    x = "Salario Anual",
+    y = "Incremento Porcentual",
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal()
+```
+
+
+### Bono (0.5)
+
+Los casos 'Denial' y 'Fortune Telling' en el gráfico a continuación ilustran dos problemas comunes al estimar una línea de regresión. Explique con sus propias palabras en qué consisten estos dos problemas.
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: "center"
+#| out-width: "100%"
+library(knitr)
+knitr::include_graphics("images/type_line.jpg")
+```

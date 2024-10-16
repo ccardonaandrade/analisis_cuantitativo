@@ -1,0 +1,44 @@
+---
+title: "Analítica de Datos"
+subtitle: "Parcial II"
+date: Octubre 16, 2024
+format: 
+  html:
+    theme: OHI-styles.scss
+    title-block-banner-color: "#E3F1F2"
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    smooth-scroll: true
+---
+  
+  
+<br>
+  
+Before you start the exam, read all the questions and, according to your judgment, open the slides and scripts that you find useful. No one should have their email open for more than 5 minutes unless you are sending the exam with all the answers. **The use of ChatGPT (or any other AI website) is not allowed**. All answers must be submitted in a PDF document created in Quarto or in an R Script with comments. As mentioned earlier, those who submit their answers in Quarto will receive a +0.3 bonus on the exam.
+
+For those submitting the document in Quarto, I suggest first writing the code in an R Script, verifying that it runs correctly, and then transferring the answers to the `.qmd` document. Do not include the code for the graphs in the final document; for the rest of the answers, it is mandatory to include the code.
+
+The answers will be evaluated based on clarity, accuracy, and quality of the analysis. Graphs and tables will account for only half of the score. You have 2 hours to complete the exam, so there is enough time to shorten any answer that is difficult to summarize. Each question is worth 0.5 points of the final grade.
+
+All the best!
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+# Acá van todos los paquetes necesarios para correr el código
+library(fontawesome)
+library(tidyverse)
+library(openintro)
+library(scales)
+library(ggmosaic)
+library(tidymodels)
+```
+      
+{{< include /sections/0-preliminar.qmd >}}
+    
+{{< include /sections/1-descriptive.qmd >}}
+
+{{< include /sections/2-inferencial.qmd >}}

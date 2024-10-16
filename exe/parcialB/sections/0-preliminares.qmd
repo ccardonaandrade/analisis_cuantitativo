@@ -1,0 +1,58 @@
+---
+  format: html
+---
+  
+## `r fontawesome::fa("gear", fill = "#2e3175", a11y = "sem")` Preliminares {#preliminares}
+  
+### Contexto
+
+```{r}
+#| label: blizzard-data-prep
+#| echo: false
+
+blizzard_salary <- blizzard_salary |>
+  mutate(
+    salario_anual = case_when(
+      salary_type == "week" ~ current_salary * 52,
+      salary_type == "hour" ~ current_salary * 40 * 52,
+      TRUE ~ current_salary
+    ),
+    performance_rating = if_else(performance_rating == "Developing", "Poor", performance_rating)
+  ) |>
+  filter(salary_type != "week") |>
+  mutate(
+    salary_type = if_else(salary_type == "hour", "Contrato por Hora", "Contrato Fijo")
+  ) |>
+  filter(!is.na(salario_anual)) |>
+  select(percent_incr, salary_type, salario_anual, performance_rating) |>
+  rename(incr_porcentual = percent_incr,
+         tipo_contrato = salary_type,
+         nivel_performance = performance_rating)  |>
+  mutate(salario_anual = ifelse(salario_anual < 20000, 25000, salario_anual),
+         nivel_performance = fct_recode(nivel_performance,
+                                         "Malo" = "Poor",
+                                         "Normal" = "Successful",
+                                         "Bueno" = "High",
+                                         "Excelente" = "Top"))
+```
+
+En 2021, Blizzard Entertainment inició un proyecto de análisis de datos sobre los aumentos salariales de sus empleados. Esto fue en respuesta a las crecientes preocupaciones sobre prácticas de compensación en la industria de videojuegos, desencadenadas por un archivo de Excel anónimo que revelaba salarios internos. El objetivo era identificar posibles disparidades en los ajustes salariales entre diferentes grupos de empleados y niveles de desempeño (Fuente: [Blizzard Workers Share Salaries in Revolt Over Pay](https://www.bloomberg.com/news/articles/2020-08-03/blizzard-workers-share-salaries-in-revolt-over-wage-disparities){target="_blank"}).
+
+
+Suponga que usted hace parte de este equipo. El nombre de los datos que usarán para este análisis es `blizzard_salary` y las variables relevantes son:
+
+-   `incr_porcentual`: Aumento dado en julio de 2020, como incremento porcentual con valores entre 1 ( aumento del 1) al 21.5 (incremento del 21.5%)
+
+-   `tipo_contrato`: Tipo de contrato, con las categorías `Contrato por Hora` y `Contrato Fijo`
+
+-   `salario_anual`: Salario anual, en doláres (USD), con valores entre \$25,000 y \$216,856.
+
+-   `nivel_performance`: El nivel de la revisión del desempeño más reciente, con categorías `Malo`, `Normal`, `Bueno`, y `Excelente`.
+
+Las diez primeras filas de los datos `blizzard_salary` son las siguientes:
+
+```{r}
+#| echo: false
+blizzard_salary |>
+  select(incr_porcentual, tipo_contrato, salario_anual, nivel_performance)
+```

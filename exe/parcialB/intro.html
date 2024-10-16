@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.290">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analítica de Datos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="intro_files/libs/clipboard/clipboard.min.js"></script>
+<script src="intro_files/libs/quarto-html/quarto.js"></script>
+<script src="intro_files/libs/quarto-html/popper.min.js"></script>
+<script src="intro_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="intro_files/libs/quarto-html/anchor.min.js"></script>
+<link href="intro_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="intro_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="intro_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="intro_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="intro_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#preliminares" id="toc-preliminares" class="nav-link active" data-scroll-target="#preliminares"><svg aria-label="Gear" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Gear</title><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"></path></svg> Preliminares</a>
+  <ul class="collapse">
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto">Contexto</a></li>
+  </ul></li>
+  <li><a href="#descriptiva" id="toc-descriptiva" class="nav-link" data-scroll-target="#descriptiva"><svg aria-label="Cubes" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Cubes</title><path d="M290.8 48.6l78.4 29.7L288 109.5 206.8 78.3l78.4-29.7c1.8-.7 3.8-.7 5.7 0zM136 92.5V204.7c-1.3 .4-2.6 .8-3.9 1.3l-96 36.4C14.4 250.6 0 271.5 0 294.7V413.9c0 22.2 13.1 42.3 33.5 51.3l96 42.2c14.4 6.3 30.7 6.3 45.1 0L288 457.5l113.5 49.9c14.4 6.3 30.7 6.3 45.1 0l96-42.2c20.3-8.9 33.5-29.1 33.5-51.3V294.7c0-23.3-14.4-44.1-36.1-52.4l-96-36.4c-1.3-.5-2.6-.9-3.9-1.3V92.5c0-23.3-14.4-44.1-36.1-52.4l-96-36.4c-12.8-4.8-26.9-4.8-39.7 0l-96 36.4C150.4 48.4 136 69.3 136 92.5zM392 210.6l-82.4 31.2V152.6L392 121v89.6zM154.8 250.9l78.4 29.7L152 311.7 70.8 280.6l78.4-29.7c1.8-.7 3.8-.7 5.7 0zm18.8 204.4V354.8L256 323.2v95.9l-82.4 36.2zM421.2 250.9c1.8-.7 3.8-.7 5.7 0l78.4 29.7L424 311.7l-81.2-31.1 78.4-29.7zM523.2 421.2l-77.6 34.1V354.8L528 323.2v90.7c0 3.2-1.9 6-4.8 7.3z"></path></svg> Parte Descriptiva</a>
+  <ul class="collapse">
+  <li><a href="#pregunta-1" id="toc-pregunta-1" class="nav-link" data-scroll-target="#pregunta-1">Pregunta 1</a></li>
+  <li><a href="#pregunta-2" id="toc-pregunta-2" class="nav-link" data-scroll-target="#pregunta-2">Pregunta 2</a></li>
+  <li><a href="#pregunta-3" id="toc-pregunta-3" class="nav-link" data-scroll-target="#pregunta-3">Pregunta 3</a></li>
+  <li><a href="#pregunta-4" id="toc-pregunta-4" class="nav-link" data-scroll-target="#pregunta-4">Pregunta 4</a></li>
+  </ul></li>
+  <li><a href="#inferencial" id="toc-inferencial" class="nav-link" data-scroll-target="#inferencial"><svg aria-label="Code Compare" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Code Compare</title><path d="M320 488c0 9.5-5.6 18.1-14.2 21.9s-18.8 2.3-25.8-4.1l-80-72c-5.1-4.6-7.9-11-7.9-17.8s2.9-13.3 7.9-17.8l80-72c7-6.3 17.2-7.9 25.8-4.1s14.2 12.4 14.2 21.9v40h16c35.3 0 64-28.7 64-64V153.3C371.7 141 352 112.8 352 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V320c0 70.7-57.3 128-128 128H320v40zM456 80a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zM192 24c0-9.5 5.6-18.1 14.2-21.9s18.8-2.3 25.8 4.1l80 72c5.1 4.6 7.9 11 7.9 17.8s-2.9 13.3-7.9 17.8l-80 72c-7 6.3-17.2 7.9-25.8 4.1s-14.2-12.4-14.2-21.9V128H176c-35.3 0-64 28.7-64 64V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V192c0-70.7 57.3-128 128-128h16V24zM56 432a24 24 0 1 0 48 0 24 24 0 1 0 -48 0z"></path></svg> Parte Inferencial</a>
+  <ul class="collapse">
+  <li><a href="#pregunta-5" id="toc-pregunta-5" class="nav-link" data-scroll-target="#pregunta-5">Pregunta 5</a></li>
+  <li><a href="#pregunta-6" id="toc-pregunta-6" class="nav-link" data-scroll-target="#pregunta-6">Pregunta 6</a></li>
+  <li><a href="#pregunta-7" id="toc-pregunta-7" class="nav-link" data-scroll-target="#pregunta-7">Pregunta 7</a></li>
+  <li><a href="#pregunta-8" id="toc-pregunta-8" class="nav-link" data-scroll-target="#pregunta-8">Pregunta 8</a></li>
+  <li><a href="#pregunta-9" id="toc-pregunta-9" class="nav-link" data-scroll-target="#pregunta-9">Pregunta 9</a></li>
+  <li><a href="#pregunta-10" id="toc-pregunta-10" class="nav-link" data-scroll-target="#pregunta-10">Pregunta 10</a></li>
+  <li><a href="#bono-0.5" id="toc-bono-0.5" class="nav-link" data-scroll-target="#bono-0.5">Bono (0.5)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analítica de Datos</h1>
+<p class="subtitle lead">Parcial II</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">16 de octubre de 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><br></p>
+<p>Antes de empezar a resolver el parcial, lea todas las preguntas y, de acuerdo a su criterio, abra las diapositivas y scripts que considere útiles. Nadie debería tener abierto el correo luego de 5 minutos a menos que sea para enviar el parcial con todas las respuestas. <strong>El uso de ChatGPT (o cualquier otra plataforma de IA) no está permitido.</strong> Todas las respuestas deben ir en un documento PDF creado en Quarto o en un R Script con las respuestas como comentarios. Como se mencionó anteriormente, aquellos que entreguen las respuestas en Quarto recibirán un +0.3 en el parcial.</p>
+<p>Para aquellos que van a entregar el documento en Quarto, les sugiero primero escribir el código en un R Script, corroborar que se está ejecutando correctamente y, luego, pasar las respuestas al documento <code>.qmd</code>. No incluyan el código de las gráficas que utilicen en el documento final; para el resto de las respuestas, es obligatorio incluirlo.</p>
+<p>Las respuestas serán evaluadas en función de la claridad, precisión y calidad del análisis. Los gráficos y tablas representarán sólo la mitad del puntaje. Tienen 2 horas para resolver el parcial, por lo que hay tiempo suficiente para acortar cualquier respuesta. Cada punto vale 0,5.</p>
+<p>Éxitos!</p>
+<section id="preliminares" class="level2">
+<h2 class="anchored" data-anchor-id="preliminares"><svg aria-label="Gear" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Gear</title><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"></path></svg> Preliminares</h2>
+<section id="contexto" class="level3">
+<h3 class="anchored" data-anchor-id="contexto">Contexto</h3>
+<p>En 2021, Blizzard Entertainment inició un proyecto de análisis de datos sobre los aumentos salariales de sus empleados. Esto fue en respuesta a las crecientes preocupaciones sobre prácticas de compensación en la industria de videojuegos, desencadenadas por un archivo de Excel anónimo que revelaba salarios internos. El objetivo era identificar posibles disparidades en los ajustes salariales entre diferentes grupos de empleados y niveles de desempeño (Fuente: <a href="https://www.bloomberg.com/news/articles/2020-08-03/blizzard-workers-share-salaries-in-revolt-over-wage-disparities" target="_blank">Blizzard Workers Share Salaries in Revolt Over Pay</a>).</p>
+<p>Suponga que usted hace parte de este equipo. El nombre de los datos que usarán para este análisis es <code>blizzard_salary</code> y las variables relevantes son:</p>
+<ul>
+<li><p><code>incr_porcentual</code>: Aumento dado en julio de 2020, como incremento porcentual con valores entre 1 ( aumento del 1) al 21.5 (incremento del 21.5%)</p></li>
+<li><p><code>tipo_contrato</code>: Tipo de contrato, con las categorías <code>Contrato por Hora</code> y <code>Contrato Fijo</code></p></li>
+<li><p><code>salario_anual</code>: Salario anual, en doláres (USD), con valores entre $25,000 y $216,856.</p></li>
+<li><p><code>nivel_performance</code>: El nivel de la revisión del desempeño más reciente, con categorías <code>Malo</code>, <code>Normal</code>, <code>Bueno</code>, y <code>Excelente</code>.</p></li>
+</ul>
+<p>Las diez primeras filas de los datos <code>blizzard_salary</code> son las siguientes:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 409 x 4
+   incr_porcentual tipo_contrato     salario_anual nivel_performance
+             &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;fct&gt;            
+ 1             1   Contrato Fijo            25000  Bueno            
+ 2             1   Contrato Fijo            25000  Normal           
+ 3             1   Contrato Fijo            25000  Bueno            
+ 4             1   Contrato por Hora        33987. Normal           
+ 5            NA   Contrato por Hora        34798. Bueno            
+ 6            NA   Contrato por Hora        35360  &lt;NA&gt;             
+ 7            NA   Contrato por Hora        37440  &lt;NA&gt;             
+ 8             0   Contrato por Hora        37814. &lt;NA&gt;             
+ 9             4   Contrato por Hora        41101. Excelente        
+10             1.2 Contrato por Hora        42328  &lt;NA&gt;             
+# i 399 more rows</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="descriptiva" class="level2">
+<h2 class="anchored" data-anchor-id="descriptiva"><svg aria-label="Cubes" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Cubes</title><path d="M290.8 48.6l78.4 29.7L288 109.5 206.8 78.3l78.4-29.7c1.8-.7 3.8-.7 5.7 0zM136 92.5V204.7c-1.3 .4-2.6 .8-3.9 1.3l-96 36.4C14.4 250.6 0 271.5 0 294.7V413.9c0 22.2 13.1 42.3 33.5 51.3l96 42.2c14.4 6.3 30.7 6.3 45.1 0L288 457.5l113.5 49.9c14.4 6.3 30.7 6.3 45.1 0l96-42.2c20.3-8.9 33.5-29.1 33.5-51.3V294.7c0-23.3-14.4-44.1-36.1-52.4l-96-36.4c-1.3-.5-2.6-.9-3.9-1.3V92.5c0-23.3-14.4-44.1-36.1-52.4l-96-36.4c-12.8-4.8-26.9-4.8-39.7 0l-96 36.4C150.4 48.4 136 69.3 136 92.5zM392 210.6l-82.4 31.2V152.6L392 121v89.6zM154.8 250.9l78.4 29.7L152 311.7 70.8 280.6l78.4-29.7c1.8-.7 3.8-.7 5.7 0zm18.8 204.4V354.8L256 323.2v95.9l-82.4 36.2zM421.2 250.9c1.8-.7 3.8-.7 5.7 0l78.4 29.7L424 311.7l-81.2-31.1 78.4-29.7zM523.2 421.2l-77.6 34.1V354.8L528 323.2v90.7c0 3.2-1.9 6-4.8 7.3z"></path></svg> Parte Descriptiva</h2>
+<section id="pregunta-1" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-1">Pregunta 1</h3>
+<p>Los dos gráficos abajo muestran las distribuciones de los salarios anuales por rating de performance. ¿Cuál de las dos es mejor para visualizar la relación entre salarios anuales para los trabajadores dependiendo de su desempeño? Explique su criterio a la hora de elegir.</p>
+<div id="fig-salary-performance-rating" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-salary-performance-rating-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-salary-performance-rating-1.png" class="quarto-discovered-preview-image img-fluid figure-img" data-ref-parent="fig-salary-performance-rating" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Opción 1</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-salary-performance-rating-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-salary-performance-rating-2.png" class="img-fluid figure-img" data-ref-parent="fig-salary-performance-rating" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Opción 2</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Distribución de los tipos de contrato por rating en performance</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="pregunta-2" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-2">Pregunta 2</h3>
+<p>Supongamos que uno de sus compañeros escribió un código como parte de su análisis de los datos. Luego imprimió los resultados que se muestran a continuación. Desafortunadamente, el valor indicado con _____ se borró de la impresión.</p>
+<pre><code># A tibble: 5 x 3
+  nivel_performance salario_anual_promedio salario_anual_mediana
+  &lt;fct&gt;                               &lt;dbl&gt;                 &lt;dbl&gt;
+1 Excelente                          89287.                 74000
+2 Bueno                              92982.                 89200
+3 Normal                             _____                  70000
+4 Malo                              112344.                116000
+5 NA                                 85681.                 79000</code></pre>
+<p>¿Cuál de los siguientes valores es el mejor estimado para el número faltante?</p>
+<ol type="a">
+<li>30,000</li>
+<li>50,000</li>
+<li>80,000</li>
+<li>100,000</li>
+</ol>
+</section>
+<section id="pregunta-3" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-3">Pregunta 3</h3>
+<p>¿Cuál de las distribuciones de salario anual tiene una desviación estándar mayor?</p>
+<ol type="a">
+<li>Trabajadores con contrato por hora</li>
+<li>Trabajadores con contrato fijo</li>
+<li>Más o menos tienen la misma</li>
+</ol>
+</section>
+<section id="pregunta-4" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-4">Pregunta 4</h3>
+<p>Creen una nueva variable <code>aumento</code> que sea el incremento en el salario que tendrían los trabajadores luego de 2020 (se multiplicaría el salario anual por<code>(incr_porcentual/100)</code>). Uno de sus colegas le pide graficar la dispersión entre las dos variables. ¿Cuál sería su conclusión sobre la relación entre el salario base y el incremento basándose en la gráfica?</p>
+</section>
+</section>
+<section id="inferencial" class="level2">
+<h2 class="anchored" data-anchor-id="inferencial"><svg aria-label="Code Compare" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#2e3175;overflow:visible;position:relative;"><title>Code Compare</title><path d="M320 488c0 9.5-5.6 18.1-14.2 21.9s-18.8 2.3-25.8-4.1l-80-72c-5.1-4.6-7.9-11-7.9-17.8s2.9-13.3 7.9-17.8l80-72c7-6.3 17.2-7.9 25.8-4.1s14.2 12.4 14.2 21.9v40h16c35.3 0 64-28.7 64-64V153.3C371.7 141 352 112.8 352 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V320c0 70.7-57.3 128-128 128H320v40zM456 80a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zM192 24c0-9.5 5.6-18.1 14.2-21.9s18.8-2.3 25.8 4.1l80 72c5.1 4.6 7.9 11 7.9 17.8s-2.9 13.3-7.9 17.8l-80 72c-7 6.3-17.2 7.9-25.8 4.1s-14.2-12.4-14.2-21.9V128H176c-35.3 0-64 28.7-64 64V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V192c0-70.7 57.3-128 128-128h16V24zM56 432a24 24 0 1 0 48 0 24 24 0 1 0 -48 0z"></path></svg> Parte Inferencial</h2>
+<section id="pregunta-5" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-5">Pregunta 5</h3>
+<p>Proponga una situación en la que tenga que calcular un intervalo de confianza de alguna de las variables, calcule el intervalo y haga el análisis correspondiente que responda a esa pregunta.</p>
+</section>
+<section id="pregunta-6" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-6">Pregunta 6</h3>
+<p>El jefe del equipo de trabajo sugiere que los salarios anuales (<code>salario_anual</code>) son el primer predictor de los incrementos (<code>incr_porcentual</code>). El modelo <code>aumento_1</code> estima la siguiente ecuación:</p>
+<p><span class="math display">\[\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}\]</span></p>
+<p>¿Cual de las siguientes interpretaciones es la mejor para el coeficiente de la pendiente?</p>
+<ol type="a">
+<li>Por cada $1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 1.59% en promedio.</li>
+<li>Por cada $1,000 de salario anual, el aumento salarial sube por 0.0159%.</li>
+<li>Por cada $1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 0.0159% en promedio.</li>
+<li>Por cada $1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 1.83% en promedio.</li>
+</ol>
+</section>
+<section id="pregunta-7" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-7">Pregunta 7</h3>
+<p>¿El modelo <code>aumento_1</code> cumple las condiciones de linealidad, varianza constante y normalidad de los errores? Utilice gráficas para sustentar su respuesta.</p>
+</section>
+<section id="pregunta-8" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-8">Pregunta 8</h3>
+<p>Dos de sus colegas proponen dos modelos diferentes para predecir <code>incr_porcentual</code>. El primer modelo, al que llaman <code>modelo_1</code>, hace la estimación usando salario anual y una variable dummy si el trabajador tiene un contrato fijo de la siguiente manera:</p>
+<p><span class="math display">\[\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}+\hat{\beta_2}\times \text{Contrato Fijo}\]</span></p>
+<p>Por otro lado, el segundo modelo llamado <code>modelo_2</code>, utilizaría variables dummy para las categorías de <code>nivel_performance</code> estimando:</p>
+<p><span class="math display">\[\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}+\hat{\beta_2}\times \text{Malo}+\hat{\beta_3}\times \text{Normal} +\hat{\beta_4}\times \text{Excelente}\]</span></p>
+<p>¿Cuál de los dos modelos elegiría usted y cuál sería su criterio?</p>
+</section>
+<section id="pregunta-9" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-9">Pregunta 9</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 5
+  term                         estimate  std.error statistic  p.value
+  &lt;chr&gt;                           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                 3.52      0.515           6.84 5.01e-11
+2 salario_anual               0.0000102 0.00000443      2.30 2.20e- 2
+3 nivel_performanceMalo      -4.07      1.42           -2.86 4.55e- 3
+4 nivel_performanceNormal    -2.40      0.397          -6.03 5.12e- 9
+5 nivel_performanceExcelente  2.99      0.714           4.19 3.77e- 5</code></pre>
+</div>
+</div>
+<p>Cuando uno de sus colegas ve el resultado de la estimación, le comenta que “el coeficiente para <code>nivel_performanceNormal</code> es negativo, qué raro! Supongo que significa que la gente cuando tiene un peformance <code>Normal</code> reciben un aumento menor.” ¿Cómo le respondería a su colega?</p>
+</section>
+<section id="pregunta-10" class="level3">
+<h3 class="anchored" data-anchor-id="pregunta-10">Pregunta 10</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 5
+  term                        estimate  std.error statistic p.value
+  &lt;chr&gt;                          &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)                1.22      0.572           2.13 0.0335 
+2 salario_anual              0.0000141 0.00000470      2.99 0.00294
+3 tipo_contratoContrato Fijo 0.900     0.544           1.65 0.0993 </code></pre>
+</div>
+</div>
+<p>¿Cuál de las siguientes gráficas explica el modelo estimado? Explique su respuesta.</p>
+<div id="fig-raise-salary-type" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-raise-salary-type-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-raise-salary-type-1.png" class="img-fluid figure-img" data-ref-parent="fig-raise-salary-type" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Opción 1</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-raise-salary-type-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-raise-salary-type-2.png" class="img-fluid figure-img" data-ref-parent="fig-raise-salary-type" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Opción 2</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-raise-salary-type-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-raise-salary-type-3.png" class="img-fluid figure-img" data-ref-parent="fig-raise-salary-type" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) Opción 3</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-raise-salary-type-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="intro_files/figure-html/fig-raise-salary-type-4.png" class="img-fluid figure-img" data-ref-parent="fig-raise-salary-type" width="672"></p>
+<p></p><figcaption class="figure-caption">(d) Opción 4</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Visualición de la relación entre incremento porcentual, salario anual y tipo de contrato</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="bono-0.5" class="level3">
+<h3 class="anchored" data-anchor-id="bono-0.5">Bono (0.5)</h3>
+<p>Los casos ‘Denial’ y ‘Fortune Telling’ en el gráfico a continuación ilustran dos problemas comunes al estimar una línea de regresión. Explique con sus propias palabras en qué consisten estos dos problemas.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/type_line.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="intro_files/libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
