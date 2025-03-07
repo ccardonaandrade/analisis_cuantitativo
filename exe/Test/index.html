@@ -86,7 +86,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#descripción-del-dataset-de-spotify" id="toc-descripción-del-dataset-de-spotify" class="nav-link active" data-scroll-target="#descripción-del-dataset-de-spotify">Descripción del Dataset de Spotify</a></li>
+  <li><a href="#descripción-de-los-datos" id="toc-descripción-de-los-datos" class="nav-link active" data-scroll-target="#descripción-de-los-datos">Descripción de los Datos</a></li>
   <li><a href="#ejercicio-0" id="toc-ejercicio-0" class="nav-link" data-scroll-target="#ejercicio-0">Ejercicio 0</a></li>
   <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1">Ejercicio 1</a></li>
   <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2">Ejercicio 2</a></li>
@@ -122,82 +122,152 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>✔ Gráficos generados correctamente: Uso de <code>ggplot2</code> con etiquetas claras y colores adecuados.</p>
 <p>✔ Interpretación y análisis: Respuesta clara a las preguntas en comentarios y que sea concisa. Si su respuesta tiene más de 3 líneas es <strong>muy</strong> larga.</p>
 <p>✔ Formato y organización: Código limpio, comentado y con títulos adecuados en el documento.</p>
-<section id="descripción-del-dataset-de-spotify" class="level2">
-<h2 class="anchored" data-anchor-id="descripción-del-dataset-de-spotify">Descripción del Dataset de Spotify</h2>
+<section id="descripción-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="descripción-de-los-datos">Descripción de los Datos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Una de las herramientas más utilizadas para medir el sesgo de género en Hollywood es una prueba promovida originalmente por la caricaturista <a href="https://en.wikipedia.org/wiki/Alison_Bechdel" target="_blank">Alison Bechdel</a> en uno de los capítulos de su caricatura <em>Dykes To Watch Out For</em> en 1985. Bechdel estableció que una película pasa la prueba (<a href="https://www.npr.org/2008/09/02/94202522/the-bechdel-rule-defining-pop-culture-character" target="_blank">The Rule</a>) si cumple tres criterios:</p>
+</div><div class="column" style="width:50%;">
+<p><img src="img/bechdel.png" class="quarto-discovered-preview-image img-fluid" width="250"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>Debe incluir al menos dos mujeres con su respectivo nombre</p></li>
+<li><p>Que mantengan una conversación entre ellas en algún momento</p></li>
+<li><p>Y dicha conversación no debe girar en torno a un personaje masculino</p></li>
+</ol>
+<p>Este criterio, conocido como ‘La Regla’, establece un mínimo indispensable de representación femenina en pantalla.</p>
+<p>Utilizando datos del test de Bechdel, analizamos 1,615 películas estrenadas entre 1990 y 2013 para examinar la relación entre la prominencia de las mujeres en una película y su presupuesto y ganancias brutas. Los datos incluyen las siguientes variables:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,794
+Columns: 8
+$ year          &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2012, 2012, 2012, 20…
+$ decade        &lt;chr&gt; "2000-2013", "2000-2013", "2000-2013", "2000-2013", "200…
+$ title         &lt;chr&gt; "Cloudy with a Chance of Meatballs 2", "Gravity", "Jack …
+$ binary        &lt;chr&gt; "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", …
+$ bechdel_test  &lt;fct&gt; fewer than two women, fewer than two women, fewer than t…
+$ budget_2013   &lt;dbl&gt; 78.000000, 110.000000, 195.000000, 30.000000, 19.200000,…
+$ domgross_2013 &lt;dbl&gt; 119.640264, 271.814796, 65.187603, 19.316646, NA, 2.3225…
+$ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 22.59…</code></pre>
+</div>
+</div>
+<p>que incluyen:</p>
+<ul>
+<li><p>año, década y título de la película</p></li>
+<li><p>la variale <code>binary</code> que indica si la película pasa (<code>PASS</code>) o no (<code>FAIL</code>) el test de Bechdel</p></li>
+<li><p>la variable <code>bechdel_test</code> que incluye los resultados del test en detalle:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Bechdel Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">fewer than two women</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">women don’t talk to each other</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">women only talk about men</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dubious</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">passes test</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Y finalmente, el presupuesto (<code>budget_2013</code>), el recaudo en US (<code>domgross_2013</code>) y el recaudo en otros países (<code>intgross_2013</code>) en dólares de 2013 (para poder compararlos en diferentes años)</li>
+</ul>
 </section>
 <section id="ejercicio-0" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicio-0">Ejercicio 0</h2>
-<p>Abran un R Script, y utilizando la siguiente plantilla, carguen el paquete <code>tidyverse</code>. Instálenlos desde la consola si es la primera vez que usan su PC actual.</p>
+<p>Abran un R Script, carguen el paquete <code>tidyverse</code> e importen los datos <code>bechdel_data.csv</code> con el mismo nombre a R.</p>
+<p>Luego ejecuten el siguiente código para ordenar los valores del test:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ------------------------------</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Análisis de Spotify</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Autor(es): </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Fecha: </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## ------------------------------</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## cargamos todos los paquetes que usaremos en la sesión:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">### Ejercicio 1</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">bechdel_test =</span> <span class="fu">case_when</span>(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      clean_test <span class="sc">==</span> <span class="st">"ok"</span> <span class="sc">~</span> <span class="st">"passes test"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      clean_test <span class="sc">==</span> <span class="st">"dubious"</span> <span class="sc">~</span> <span class="st">"dubious"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      clean_test <span class="sc">==</span> <span class="st">"men"</span> <span class="sc">~</span> <span class="st">"women only talk about men"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      clean_test <span class="sc">==</span> <span class="st">"notalk"</span> <span class="sc">~</span> <span class="st">"women don’t talk to each other"</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      clean_test <span class="sc">==</span> <span class="st">"nowomen"</span> <span class="sc">~</span> <span class="st">"fewer than two women"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>  <span class="co"># Default case (if needed)</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bechdel_test =</span> <span class="fu">factor</span>(bechdel_test, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"passes test"</span>, <span class="st">"dubious"</span>, <span class="st">"women only talk about men"</span>, <span class="st">"women don’t talk to each other"</span>, <span class="st">"fewer than two women"</span>)))</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span> </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> <span class="fu">case_when</span>(</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">&gt;=</span> <span class="dv">1970</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">1980</span> <span class="sc">~</span> <span class="st">"1970-1980"</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">&gt;=</span> <span class="dv">1980</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">1990</span> <span class="sc">~</span> <span class="st">"1980-1990"</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">&gt;=</span> <span class="dv">1990</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">2000</span> <span class="sc">~</span> <span class="st">"1990-2000"</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">&gt;=</span> <span class="dv">2000</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> <span class="dv">2013</span> <span class="sc">~</span> <span class="st">"2000-2013"</span>,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Other"</span> <span class="co"># Optional for handling unexpected years</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, decade, title, binary, bechdel_test,budget_2013, domgross_2013, intgross_2013)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordering</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bechdel_test =</span> <span class="fu">fct_relevel</span>(bechdel_test, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"fewer than two women"</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"women don’t talk to each other"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"women only talk about men"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"dubious"</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"passes test"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(bechdel_test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="ejercicio-1" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
-<ol type="a">
-<li>Su colega creó la siguiente gráfica. Con base en este código, genere una versión estandarizada del gráfico de barras, reemplazando <code>position = "dodge"</code> por la opción correspondiente.</li>
-</ol>
+<p>Para comprobar que está bien, ejecuten el siguiente código y deberían tener el mismo resultado:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="sc">|&gt;</span> <span class="fu">count</span>(bechdel_test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    bechdel_test   n
+1           fewer than two women 141
+2 women don’t talk to each other 514
+3      women only talk about men 194
+4                        dubious 142
+5                    passes test 803</code></pre>
+</div>
+</div>
+<p>El siguiente código es para pasar los valores del presupuesto y los recaudos a millones:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">budget_2013 =</span> budget_2013<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">domgross_2013 =</span> domgross_2013<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">intgross_2013  =</span> intgross_2013 <span class="sc">/</span><span class="dv">1000000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para comprobar que el código se ejecutó correctamente, construyan el siguiente histograma para el presupuesto:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>budget_2013)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">30</span>, <span class="at">fill=</span><span class="st">"lightblue"</span>, <span class="at">color=</span><span class="st">"darkblue"</span>)<span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Budget in 2013 dollars (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.svg" class="quarto-discovered-preview-image img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
+<ol type="a">
+<li>Su colega creó la siguiente gráfica. Con base en este código, genere una versión estandarizada del gráfico de barras, reemplazando <code>position = "fill"</code> por la opción correspondiente.</li>
+</ol>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -214,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.svg" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -224,6 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Si una productora quiere invertir en películas con presupuestos más predecibles (menos variabilidad), ¿qué categoría debería evitar y por qué?</p></li>
 <li><p>Formulen una conclusión basada en los valores atípicos observados en el gráfico.</p></li>
 <li><p>¿Existe alguna categoría cuyo presupuesto tenga una distribución más simétrica en comparación con las demás? Justifiquen su respuesta con base en la forma de los diagramas de caja.</p></li>
+<li><p><strong>Bono:</strong> Escriban el código para construir el diagrama de caja de este ejercicio.</p></li>
 </ol>
 </section>
 <section id="ejercicio-3" class="level2">
@@ -234,20 +305,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.svg" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Además, las correlaciones entre los recaudos y el presupuesto son:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(bechdel_data<span class="sc">$</span>budget_2013, bechdel_data<span class="sc">$</span>domgross_2013,  <span class="at">use=</span><span class="st">"complete.obs"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4612611</code></pre>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.svg" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(bechdel_data<span class="sc">$</span>budget_2013, bechdel_data<span class="sc">$</span>intgross_2013,  <span class="at">use=</span><span class="st">"complete.obs"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.594019</code></pre>
 </div>
 </div>
 <ol type="a">
@@ -262,10 +332,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Completa el código para estimar un intervalo de confianza del 95% para el presupuesto promedio de las películas que pasan el test de Bechdel.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>_________ <span class="ot">&lt;-</span> bechdel_data<span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(binary <span class="sc">==</span> <span class="st">"PASS"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>___________, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>_________ <span class="ot">&lt;-</span> bechdel_data<span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(binary <span class="sc">==</span> <span class="st">"PASS"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>___________, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="a">
 <li><p>Interpreta el intervalo de confianza obtenido y responde: ¿Qué recomendación le darías a la empresa sobre invertir en estas películas?</p></li>
@@ -284,9 +354,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Explique en palabras la prueba de hipótesis que su colega estaba tratando de evaluar con el siguiente código.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>test_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(budget_2013 <span class="sc">~</span> binary,<span class="at">data =</span> bechdel_data, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>test_budget</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>test_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(budget_2013 <span class="sc">~</span> binary,<span class="at">data =</span> bechdel_data, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>test_budget</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -295,10 +365,10 @@ data:  budget_2013 by binary
 t = 6.5786, df = 1791, p-value = 6.216e-11
 alternative hypothesis: true difference in means between group FAIL and group PASS is not equal to 0
 95 percent confidence interval:
- 11677240 21597536
+ 11.67724 21.59754
 sample estimates:
 mean in group FAIL mean in group PASS 
-          62911555           46274167 </code></pre>
+          62.91156           46.27417 </code></pre>
 </div>
 </div>
 <ol start="5" type="a">
