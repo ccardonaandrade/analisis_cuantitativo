@@ -1,5 +1,5 @@
 ---
-title: "Parcial I"
+title: "Analítica de los Negocios - Parcial I"
 
 lang: es
 
@@ -12,27 +12,34 @@ format:
    linkcolor: tomato
 ---
 
-📅 **Fecha Límite:** Martes 18 de febrero, 6:00 p.m.
+**Antes de empezar a resolver el parcial, lea todas las preguntas**. 
 
-**Formato de Entrega:** Me envían el R Script al correo con el formato usual `nombre_apellido.R`. Si realizan el trabajo en parejas, nombren el archivo `nombre1_apellido1_nombre2_apellido2.R`. *Antes de enviar el archivo, asegúrense de que su código se ejecuta correctamente en un nuevo R Script limpio*.
+Nadie debería tener abierto el correo luego de 5 minutos a menos que sea para enviar el parcial con todas las respuestas. **El uso de ChatGPT (o cualquier otra plataforma de IA) no está permitido.** 
+
+**Formato de Entrega:** 
+
+- Me envían el R Script al correo con el formato usual: `nombre_apellido.R`. 
+
+- *Antes de enviar el archivo, asegúrense de que su código se ejecuta correctamente en un nuevo R Script limpio*.
 
 
 **Criterios de evaluación:**
 
-✔ Código correcto y bien estructurado: si el código no ejecuta, descuento la mitad del punto.
+✔ Código correcto y bien estructurado: Si el código no ejecuta, se descontará la mitad del punto.
 
-✔ Gráficos generados correctamente: Uso de `ggplot2` con etiquetas claras y colores adecuados.
+✔ Interpretación y análisis: Las respuestas deben estar en comentarios dentro del código, ser claras y concisas. Tienen 2.5 horas para resolver el parcial, por lo que hay tiempo suficiente para sintetizar bien cada respuesta.
 
-✔ Interpretación y análisis: Respuesta clara a las preguntas en comentarios y que sea concisa. Si su respuesta tiene más de 3 líneas es **muy** larga.
+✔ Formato y organización: Código limpio, bien comentado y con títulos adecuados para cada sección.
 
-✔ Formato y organización: Código limpio, comentado y con títulos adecuados en el documento.
+Cada ejercicio vale **1/5** del parcial.
 
+¡Éxitos!
 
 ## Descripción de los Datos
 
 ::: {.columns}
 ::: {.column width=50%}
-Una de las herramientas más utilizadas para medir el sesgo de género en Hollywood es una prueba promovida originalmente por la caricaturista [Alison Bechdel](https://en.wikipedia.org/wiki/Alison_Bechdel){target="_blank"} en uno de los capítulos de su caricatura *Dykes To Watch Out For* en 1985. Bechdel estableció que una película pasa la prueba ([The Rule](https://www.npr.org/2008/09/02/94202522/the-bechdel-rule-defining-pop-culture-character){target="_blank"}) si cumple tres criterios: 
+Una de las herramientas más utilizadas para medir la representatividad femenina en Hollywood es una prueba promovida originalmente por la caricaturista [Alison Bechdel](https://en.wikipedia.org/wiki/Alison_Bechdel){target="_blank"} en uno de los capítulos de su caricatura *Dykes To Watch Out For* en 1985. Bechdel estableció que una película pasa la prueba ([The Rule](https://www.npr.org/2008/09/02/94202522/the-bechdel-rule-defining-pop-culture-character){target="_blank"}) si cumple tres criterios: 
 :::
 
 ::: {.column width=50%}
@@ -53,7 +60,9 @@ Una de las herramientas más utilizadas para medir el sesgo de género en Hollyw
 
 Este criterio, conocido como 'La Regla', establece un mínimo indispensable de representación femenina en pantalla.
 
-Utilizando datos del test de Bechdel, analizamos 1,615 películas estrenadas entre 1990 y 2013 para examinar la relación entre la prominencia de las mujeres en una película y su presupuesto y ganancias brutas. Los datos incluyen las siguientes variables:
+Asumamos que trabajas como analista en una empresa de producción cinematográfica. Un nuevo cliente está interesado en invertir en proyectos cinematográficos y desea saber si producir películas con mayor representatividad femenina es rentable. Para ayudarlo en su decisión, analizaremos una muestra de 1794 películas estrenadas entre 1970 y 2013, examinando la relación entre representatividad femenina en una película y sus presupuestos y ganancias brutas.
+
+Los datos incluyen las siguientes variables:
 
 ```{r}
 #| eval: true
@@ -73,18 +82,11 @@ bechdel_data <- bechdel_data |> mutate(bechdel_test = fct_relevel(bechdel_test,
                                     "dubious", 
                                     "passes test")) |> 
   arrange(bechdel_test)  # Reorders the rows based on the new factor levels
-
-# Changing to millions
-bechdel_data <- bechdel_data |>
-  mutate(budget_2013 = budget_2013/1000000,
-         domgross_2013 = domgross_2013/1000000,
-         intgross_2013  = intgross_2013 /1000000)
   
   
 glimpse(bechdel_data)
 ```
 
-que incluyen:
 
 - año, década y título de la película
 
@@ -101,7 +103,7 @@ knitr::kable(bechdel_data |> count(bechdel_test) |> select(bechdel_test),
 ```
 
 
-- Y finalmente, el presupuesto (`budget_2013`), el recaudo en US (`domgross_2013`) y el recaudo en otros países (`intgross_2013`) en dólares de 2013 (para poder compararlos en diferentes años)
+- Y finalmente, el presupuesto (`budget_2013`), el recaudo en Estados Unidos (`domgross_2013`) y el recaudo en otros países (`intgross_2013`) en millones de dólares de 2013 (para poder compararlos en diferentes años)
 
      
 ## Ejercicio 0
@@ -134,61 +136,10 @@ Para comprobar que está bien, ejecuten el siguiente código y deberían tener e
 bechdel_data |> count(bechdel_test)
 ```
 
-El siguiente código es para pasar los valores del presupuesto y los recaudos a millones:
-
-```{r}
-#| eval: false
-#| echo: true
-#| warning: false
-bechdel_data <- bechdel_data |>
-  mutate(budget_2013 = budget_2013/1000000,
-         domgross_2013 = domgross_2013/1000000,
-         intgross_2013  = intgross_2013 /1000000)
-```
-
-
-Para comprobar que el código se ejecutó correctamente, construyan el siguiente histograma para el presupuesto:
-
-::: {.columns}
-::: {.column width=50%}
-
-```{r}
-#| eval: false
-#| echo: true
-
-ggplot(bechdel_data, aes(x=budget_2013)) +
-  geom_histogram(bins=30, fill="lightblue", color="darkblue")+
-  labs(y="Frequency",
-       x="Budget in 2013 dollars (millions)") +
-  theme_minimal()
-
-
-```
-:::
-
-::: {.column width=50%}
-
-
-```{r}
-#| eval: true
-#| echo: false
-#| warning: false
-#| fig-align: center
-
-ggplot(bechdel_data, aes(x=budget_2013)) +
-  geom_histogram(bins=30, fill="lightblue", color="darkblue")+
-  labs(y="Frequency",
-       x="Budget in 2013 dollars (millions)") +
-  theme_minimal()
-
-```
-
-:::
-:::
 
 ## Ejercicio 1
 
-a) Su colega creó la siguiente gráfica. Con base en este código, genere una versión estandarizada del gráfico de barras, reemplazando `position = "fill"` por la opción correspondiente.
+a) Uno de tus colegas creó la siguiente gráfica. Con base en este código, genera una versión estandarizada del gráfico de barras, reemplazando `position = "fill"` por la opción correspondiente.
 
 
 ::: {.columns}
@@ -231,10 +182,11 @@ ggplot(bechdel_data, aes(x=decade, fill=bechdel_test)) +
 :::
 
 
-b) Identifique tres observaciones relevantes sobre los datos basándose en ambas visualizaciones. Justifique cada observación con información extraída de los gráficos.
+b) Identifica tres observaciones relevantes sobre los datos basándose en ambas visualizaciones. Justifique cada observación con información extraída de los gráficos.
 
 ## Ejercicio 2
 
+El siguiente gráfico muestra la distribución del presupuesto de la película según los resultados del test de Bechdel.:
 
 ```{r}
 #| eval: true
@@ -260,7 +212,7 @@ c) Formulen una conclusión basada en los valores atípicos observados en el gr�
 
 d) ¿Existe alguna categoría cuyo presupuesto tenga una distribución más simétrica en comparación con las demás? Justifiquen su respuesta con base en la forma de los diagramas de caja.
 
-e) **Bono:** Escriban el código para construir el diagrama de caja de este ejercicio.
+e) **Bono (0.25):** Escriban el código para construir el diagrama de caja de este ejercicio.
 
 ## Ejercicio 3
 
@@ -311,7 +263,11 @@ corrplot(cor(monetary_vars, use = "complete.obs"),method = "number",type = "uppe
 
 a) ¿La relación entre las variables en los gráficos de dispersión es consistente con los valores de correlación obtenidos? Justifica tu respuesta.
 
-b) ¿Por qué podría haber una diferencia en la correlación entre el presupuesto y los ingresos domésticos vs. internacionales?
+b) ¿Por qué podría existir una diferencia en la correlación entre el presupuesto y los ingresos domésticos vs. internacionales?
+
+c) Asumamos que el presupuesto de distribuye como una normal con $\text{Budget}\sim N(70,15)$. Utilizando el comando `pnorm()` responde: ¿cuántas películas de nuestra muestra tienen un presupuesto mayor a 90 millones de dólares?
+
+d) Bajo el mismo escenario del punto anterior y utilizando el comando `qnorm()`, ¿qué valor de presupuesto corresponde al percentil 90?
 
 ## Ejercicio 4
 
@@ -324,13 +280,13 @@ a) Completa el código para estimar un intervalo de confianza del 95% para el pr
 #| echo: true
 #| warning: false
 
-_________ <- bechdel_data|>
+_________ <- bechdel_data |>
   filter(binary == "PASS")
 
 t.test(pass_data$___________, conf.level = 0.95)
 ```
 
-b) Interpreta el intervalo de confianza obtenido y responde: ¿Qué recomendación le darías a la empresa sobre invertir en estas películas?
+b) Interpreta el intervalo de confianza obtenido en el contexto de nuestros datos y responde: ¿Qué recomendación le darías a la empresa sobre invertir en estas películas?
 
 c) Estima el intervalo de confianza con un nivel del 99%. ¿Cómo cambia tu recomendación a la empresa en este caso?
 
@@ -338,29 +294,33 @@ d) Explica la implicación de utilizar un nivel de confianza del 99% en lugar de
 
 ## Ejercicio 5
 
-Un grupo de investigadores está analizando la evolución de la representación femenina en el cine utilizando la prueba de Bechdel. Han recibido informes de que, en décadas recientes, la proporción de películas que pasan la prueba ha aumentado significativamente en comparación con décadas anteriores. Para verificar esto, deciden realizar un análisis estadístico.
+Algunos productores de cine han argumentado que las películas con mayor representación femenina no son una inversión rentable y, por lo tanto, evitan financiarlas. Ellos se basan en el retorno de inversión (**ROI**), que se define como la diferencia entre las ganancias brutas y el presupuesto de la película:
 
-Preguntas:
+$$Retorno=Recaudo−Presupuesto$$
 
-a) ¿Cuál debería ser la hipótesis nula en este análisis? Explique brevemente.
 
-b) Si eres un analista de cine y trabajas para una organización que busca mejorar la representación femenina en la industria, ¿cuál de los dos errores te preocuparía más? Explica tu razonamiento.
+Para evaluar esta afirmación, te contratan para que analices la rentabilidad de las películas utilizando la prueba de Bechdel. Tu objetivo es determinar si existe evidencia estadística de que las películas con mayor representación femenina tienen un retorno significativamente diferente en comparación con aquellas que no la tienen.
+
+
+a) ¿Cuál debería ser la hipótesis nula en este análisis? Explica brevemente.
+
+b) Si eres un analista de cine y trabajas para una organización que busca mejorar la representación femenina en la industria, ¿cuál de los dos errores (Tipo I o Tipo II) te preocuparía más? Explica tu razonamiento.
 
 c) ¿Tu respuesta cambiaría si estuvieras en una empresa productora que decide invertir en películas basándose en estos datos? ¿Por qué?
 
-d) Explique en palabras la prueba de hipótesis que su colega estaba tratando de evaluar con el siguiente código. 
+d)  Explica en tus propias palabras el procedimiento de la prueba de hipótesis, el resultado obtenido y el criterio de decisión basado en el siguiente código:
 
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
 
+bechdel_data <- bechdel_data |>
+  mutate(roi_us = domgross_2013 - budget_2013)
 
-test_budget <- t.test(budget_2013 ~ binary,data = bechdel_data, conf.level = 0.95)
+test_budget <- t.test(roi_us ~ binary, data = bechdel_data, conf.level = 0.99)
 
 test_budget
 
 ```
 
-
-e) El p-value de la prueba es `r format(test_budget$p.value, scientific = FALSE)`. ¿Cuál es el resultado de la prueba?¿Por qué?

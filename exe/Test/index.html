@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Parcial I</title>
+<title>Analítica de los Negocios - Parcial I</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,6 +73,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta cr-debug-mode="false">
 <meta cr-remove-header-space="false">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="_extensions/qmd-lab/closeread/closeread.css">
 <link rel="stylesheet" href="msaz.css">
@@ -100,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Parcial I</h1>
+<h1 class="title">Analítica de los Negocios - Parcial I</h1>
 </div>
 
 
@@ -115,18 +117,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>📅 <strong>Fecha Límite:</strong> Martes 18 de febrero, 6:00 p.m.</p>
-<p><strong>Formato de Entrega:</strong> Me envían el R Script al correo con el formato usual <code>nombre_apellido.R</code>. Si realizan el trabajo en parejas, nombren el archivo <code>nombre1_apellido1_nombre2_apellido2.R</code>. <em>Antes de enviar el archivo, asegúrense de que su código se ejecuta correctamente en un nuevo R Script limpio</em>.</p>
+<p><strong>Antes de empezar a resolver el parcial, lea todas las preguntas</strong>.</p>
+<p>Nadie debería tener abierto el correo luego de 5 minutos a menos que sea para enviar el parcial con todas las respuestas. <strong>El uso de ChatGPT (o cualquier otra plataforma de IA) no está permitido.</strong></p>
+<p><strong>Formato de Entrega:</strong></p>
+<ul>
+<li><p>Me envían el R Script al correo con el formato usual: <code>nombre_apellido.R</code>.</p></li>
+<li><p><em>Antes de enviar el archivo, asegúrense de que su código se ejecuta correctamente en un nuevo R Script limpio</em>.</p></li>
+</ul>
 <p><strong>Criterios de evaluación:</strong></p>
-<p>✔ Código correcto y bien estructurado: si el código no ejecuta, descuento la mitad del punto.</p>
-<p>✔ Gráficos generados correctamente: Uso de <code>ggplot2</code> con etiquetas claras y colores adecuados.</p>
-<p>✔ Interpretación y análisis: Respuesta clara a las preguntas en comentarios y que sea concisa. Si su respuesta tiene más de 3 líneas es <strong>muy</strong> larga.</p>
-<p>✔ Formato y organización: Código limpio, comentado y con títulos adecuados en el documento.</p>
+<p>✔ Código correcto y bien estructurado: Si el código no ejecuta, se descontará la mitad del punto.</p>
+<p>✔ Interpretación y análisis: Las respuestas deben estar en comentarios dentro del código, ser claras y concisas. Tienen 2.5 horas para resolver el parcial, por lo que hay tiempo suficiente para sintetizar bien cada respuesta.</p>
+<p>✔ Formato y organización: Código limpio, bien comentado y con títulos adecuados para cada sección.</p>
+<p>Cada ejercicio vale <strong>1/5</strong> del parcial.</p>
+<p>¡Éxitos!</p>
 <section id="descripción-de-los-datos" class="level2">
 <h2 class="anchored" data-anchor-id="descripción-de-los-datos">Descripción de los Datos</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Una de las herramientas más utilizadas para medir el sesgo de género en Hollywood es una prueba promovida originalmente por la caricaturista <a href="https://en.wikipedia.org/wiki/Alison_Bechdel" target="_blank">Alison Bechdel</a> en uno de los capítulos de su caricatura <em>Dykes To Watch Out For</em> en 1985. Bechdel estableció que una película pasa la prueba (<a href="https://www.npr.org/2008/09/02/94202522/the-bechdel-rule-defining-pop-culture-character" target="_blank">The Rule</a>) si cumple tres criterios:</p>
+<p>Una de las herramientas más utilizadas para medir la representatividad femenina en Hollywood es una prueba promovida originalmente por la caricaturista <a href="https://en.wikipedia.org/wiki/Alison_Bechdel" target="_blank">Alison Bechdel</a> en uno de los capítulos de su caricatura <em>Dykes To Watch Out For</em> en 1985. Bechdel estableció que una película pasa la prueba (<a href="https://www.npr.org/2008/09/02/94202522/the-bechdel-rule-defining-pop-culture-character" target="_blank">The Rule</a>) si cumple tres criterios:</p>
 </div><div class="column" style="width:50%;">
 <p><img src="img/bechdel.png" class="quarto-discovered-preview-image img-fluid" width="250"></p>
 </div>
@@ -137,7 +145,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Y dicha conversación no debe girar en torno a un personaje masculino</p></li>
 </ol>
 <p>Este criterio, conocido como ‘La Regla’, establece un mínimo indispensable de representación femenina en pantalla.</p>
-<p>Utilizando datos del test de Bechdel, analizamos 1,615 películas estrenadas entre 1990 y 2013 para examinar la relación entre la prominencia de las mujeres en una película y su presupuesto y ganancias brutas. Los datos incluyen las siguientes variables:</p>
+<p>Asumamos que trabajas como analista en una empresa de producción cinematográfica. Un nuevo cliente está interesado en invertir en proyectos cinematográficos y desea saber si producir películas con mayor representatividad femenina es rentable. Para ayudarlo en su decisión, analizaremos una muestra de 1794 películas estrenadas entre 1970 y 2013, examinando la relación entre representatividad femenina en una película y sus presupuestos y ganancias brutas.</p>
+<p>Los datos incluyen las siguientes variables:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,794
@@ -152,7 +161,6 @@ $ domgross_2013 &lt;dbl&gt; 119.640264, 271.814796, 65.187603, 19.316646, NA, 2.
 $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 22.59…</code></pre>
 </div>
 </div>
-<p>que incluyen:</p>
 <ul>
 <li><p>año, década y título de la película</p></li>
 <li><p>la variale <code>binary</code> que indica si la película pasa (<code>PASS</code>) o no (<code>FAIL</code>) el test de Bechdel</p></li>
@@ -187,7 +195,7 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 </div>
 </div>
 <ul>
-<li>Y finalmente, el presupuesto (<code>budget_2013</code>), el recaudo en US (<code>domgross_2013</code>) y el recaudo en otros países (<code>intgross_2013</code>) en dólares de 2013 (para poder compararlos en diferentes años)</li>
+<li>Y finalmente, el presupuesto (<code>budget_2013</code>), el recaudo en Estados Unidos (<code>domgross_2013</code>) y el recaudo en otros países (<code>intgross_2013</code>) en millones de dólares de 2013 (para poder compararlos en diferentes años)</li>
 </ul>
 </section>
 <section id="ejercicio-0" class="level2">
@@ -217,24 +225,41 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 5                    passes test 803</code></pre>
 </div>
 </div>
-<p>El siguiente código es para pasar los valores del presupuesto y los recaudos a millones:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">budget_2013 =</span> budget_2013<span class="sc">/</span><span class="dv">1000000</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">domgross_2013 =</span> domgross_2013<span class="sc">/</span><span class="dv">1000000</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">intgross_2013  =</span> intgross_2013 <span class="sc">/</span><span class="dv">1000000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Para comprobar que el código se ejecutó correctamente, construyan el siguiente histograma para el presupuesto:</p>
+</section>
+<section id="ejercicio-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
+<ol type="a">
+<li>Uno de tus colegas creó la siguiente gráfica. Con base en este código, genera una versión estandarizada del gráfico de barras, reemplazando <code>position = "fill"</code> por la opción correspondiente.</li>
+</ol>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>budget_2013)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">30</span>, <span class="at">fill=</span><span class="st">"lightblue"</span>, <span class="at">color=</span><span class="st">"darkblue"</span>)<span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Frequency"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Budget in 2013 dollars (millions)"</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Identifica tres observaciones relevantes sobre los datos basándose en ambas visualizaciones. Justifique cada observación con información extraída de los gráficos.</li>
+</ol>
+</section>
+<section id="ejercicio-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
+<p>El siguiente gráfico muestra la distribución del presupuesto de la película según los resultados del test de Bechdel.:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -244,57 +269,12 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 </div>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="ejercicio-1" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
-<ol type="a">
-<li>Su colega creó la siguiente gráfica. Con base en este código, genere una versión estandarizada del gráfico de barras, reemplazando <code>position = "fill"</code> por la opción correspondiente.</li>
-</ol>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<ol start="2" type="a">
-<li>Identifique tres observaciones relevantes sobre los datos basándose en ambas visualizaciones. Justifique cada observación con información extraída de los gráficos.</li>
-</ol>
-</section>
-<section id="ejercicio-2" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 <ol type="a">
 <li><p>Formulen una conclusión basada en el gráfico utilizando una medida de tendencia central.</p></li>
 <li><p>Si una productora quiere invertir en películas con presupuestos más predecibles (menos variabilidad), ¿qué categoría debería evitar y por qué?</p></li>
 <li><p>Formulen una conclusión basada en los valores atípicos observados en el gráfico.</p></li>
 <li><p>¿Existe alguna categoría cuyo presupuesto tenga una distribución más simétrica en comparación con las demás? Justifiquen su respuesta con base en la forma de los diagramas de caja.</p></li>
-<li><p><strong>Bono:</strong> Escriban el código para construir el diagrama de caja de este ejercicio.</p></li>
+<li><p><strong>Bono (0.25):</strong> Escriban el código para construir el diagrama de caja de este ejercicio.</p></li>
 </ol>
 </section>
 <section id="ejercicio-3" class="level2">
@@ -305,7 +285,7 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.svg" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -315,14 +295,16 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.svg" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <ol type="a">
 <li><p>¿La relación entre las variables en los gráficos de dispersión es consistente con los valores de correlación obtenidos? Justifica tu respuesta.</p></li>
-<li><p>¿Por qué podría haber una diferencia en la correlación entre el presupuesto y los ingresos domésticos vs.&nbsp;internacionales?</p></li>
+<li><p>¿Por qué podría existir una diferencia en la correlación entre el presupuesto y los ingresos domésticos vs.&nbsp;internacionales?</p></li>
+<li><p>Asumamos que el presupuesto de distribuye como una normal con <span class="math inline">\(\text{Budget}\sim N(70,15)\)</span>. Utilizando el comando <code>pnorm()</code> responde: ¿cuántas películas de nuestra muestra tienen un presupuesto mayor a 90 millones de dólares?</p></li>
+<li><p>Bajo el mismo escenario del punto anterior y utilizando el comando <code>qnorm()</code>, ¿qué valor de presupuesto corresponde al percentil 90?</p></li>
 </ol>
 </section>
 <section id="ejercicio-4" class="level2">
@@ -332,48 +314,49 @@ $ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 2
 <li>Completa el código para estimar un intervalo de confianza del 95% para el presupuesto promedio de las películas que pasan el test de Bechdel.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>_________ <span class="ot">&lt;-</span> bechdel_data<span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(binary <span class="sc">==</span> <span class="st">"PASS"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>___________, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>_________ <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(binary <span class="sc">==</span> <span class="st">"PASS"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>___________, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="a">
-<li><p>Interpreta el intervalo de confianza obtenido y responde: ¿Qué recomendación le darías a la empresa sobre invertir en estas películas?</p></li>
+<li><p>Interpreta el intervalo de confianza obtenido en el contexto de nuestros datos y responde: ¿Qué recomendación le darías a la empresa sobre invertir en estas películas?</p></li>
 <li><p>Estima el intervalo de confianza con un nivel del 99%. ¿Cómo cambia tu recomendación a la empresa en este caso?</p></li>
 <li><p>Explica la implicación de utilizar un nivel de confianza del 99% en lugar del 95% en la toma de decisiones de la empresa. ¿Cómo afecta esto la precisión?</p></li>
 </ol>
 </section>
 <section id="ejercicio-5" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h2>
-<p>Un grupo de investigadores está analizando la evolución de la representación femenina en el cine utilizando la prueba de Bechdel. Han recibido informes de que, en décadas recientes, la proporción de películas que pasan la prueba ha aumentado significativamente en comparación con décadas anteriores. Para verificar esto, deciden realizar un análisis estadístico.</p>
-<p>Preguntas:</p>
+<p>Algunos productores de cine han argumentado que las películas con mayor representación femenina no son una inversión rentable y, por lo tanto, evitan financiarlas. Ellos se basan en el retorno de inversión (<strong>ROI</strong>), que se define como la diferencia entre las ganancias brutas y el presupuesto de la película:</p>
+<p><span class="math display">\[Retorno=Recaudo−Presupuesto\]</span></p>
+<p>Para evaluar esta afirmación, te contratan para que analices la rentabilidad de las películas utilizando la prueba de Bechdel. Tu objetivo es determinar si existe evidencia estadística de que las películas con mayor representación femenina tienen un retorno significativamente diferente en comparación con aquellas que no la tienen.</p>
 <ol type="a">
-<li><p>¿Cuál debería ser la hipótesis nula en este análisis? Explique brevemente.</p></li>
-<li><p>Si eres un analista de cine y trabajas para una organización que busca mejorar la representación femenina en la industria, ¿cuál de los dos errores te preocuparía más? Explica tu razonamiento.</p></li>
+<li><p>¿Cuál debería ser la hipótesis nula en este análisis? Explica brevemente.</p></li>
+<li><p>Si eres un analista de cine y trabajas para una organización que busca mejorar la representación femenina en la industria, ¿cuál de los dos errores (Tipo I o Tipo II) te preocuparía más? Explica tu razonamiento.</p></li>
 <li><p>¿Tu respuesta cambiaría si estuvieras en una empresa productora que decide invertir en películas basándose en estos datos? ¿Por qué?</p></li>
-<li><p>Explique en palabras la prueba de hipótesis que su colega estaba tratando de evaluar con el siguiente código.</p></li>
+<li><p>Explica en tus propias palabras el procedimiento de la prueba de hipótesis, el resultado obtenido y el criterio de decisión basado en el siguiente código:</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>test_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(budget_2013 <span class="sc">~</span> binary,<span class="at">data =</span> bechdel_data, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>test_budget</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">roi_us =</span> domgross_2013 <span class="sc">-</span> budget_2013)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>test_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(roi_us <span class="sc">~</span> binary, <span class="at">data =</span> bechdel_data, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>test_budget</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
 
-data:  budget_2013 by binary
-t = 6.5786, df = 1791, p-value = 6.216e-11
+data:  roi_us by binary
+t = 2.2541, df = 1699.6, p-value = 0.02432
 alternative hypothesis: true difference in means between group FAIL and group PASS is not equal to 0
-95 percent confidence interval:
- 11.67724 21.59754
+99 percent confidence interval:
+ -1.657665 24.675980
 sample estimates:
 mean in group FAIL mean in group PASS 
-          62.91156           46.27417 </code></pre>
+          44.43038           32.92122 </code></pre>
 </div>
 </div>
-<ol start="5" type="a">
-<li>El p-value de la prueba es 0.0000000000621637. ¿Cuál es el resultado de la prueba?¿Por qué?</li>
-</ol>
 </section>
 
 </main>
