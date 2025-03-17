@@ -186,7 +186,7 @@ b) Identifica tres observaciones relevantes sobre los datos basándose en ambas 
 
 ## Ejercicio 2
 
-El siguiente gráfico muestra la distribución del presupuesto de la película según los resultados del test de Bechdel.:
+El siguiente gráfico muestra la distribución del presupuesto de la película según los resultados del test de Bechdel:
 
 ```{r}
 #| eval: true
@@ -265,7 +265,7 @@ a) ¿La relación entre las variables en los gráficos de dispersión es consist
 
 b) ¿Por qué podría existir una diferencia en la correlación entre el presupuesto y los ingresos domésticos vs. internacionales?
 
-c) Asumamos que el presupuesto de distribuye como una normal con $\text{Budget}\sim N(70,15)$. Utilizando el comando `pnorm()` responde: ¿cuántas películas de nuestra muestra tienen un presupuesto mayor a 90 millones de dólares?
+c) Asumamos que el presupuesto se distribuye como una normal con $\text{Budget}\sim N(70,15)$. Utilizando el comando `pnorm()` responde: ¿cuántas películas de nuestra muestra tienen un presupuesto mayor a 90 millones de dólares?
 
 d) Bajo el mismo escenario del punto anterior y utilizando el comando `qnorm()`, ¿qué valor de presupuesto corresponde al percentil 90?
 
