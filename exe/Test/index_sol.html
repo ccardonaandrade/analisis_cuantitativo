@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.290">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analítica de los Negocios - Soluciones Parcial I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_sol_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_sol_files/libs/quarto-html/quarto.js"></script>
+<script src="index_sol_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_sol_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_sol_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_sol_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_sol_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_sol_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_sol_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_sol_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="index_sol_files/libs/quarto-contrib/intersection-observer-polyfill-1.0.0/intersection-observer.js"></script>
+<script src="index_sol_files/libs/quarto-contrib/scrollama-3.2.0/scrollama.min.js"></script>
+<script src="index_sol_files/libs/quarto-contrib/closeread-0.1.0/closeread.js"></script>
+<meta cr-debug-mode="false">
+<meta cr-remove-header-space="false">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="_extensions/qmd-lab/closeread/closeread.css">
+<link rel="stylesheet" href="msaz.css">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#ejercicio-0" id="toc-ejercicio-0" class="nav-link active" data-scroll-target="#ejercicio-0">Ejercicio 0</a></li>
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1">Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2">Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3">Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4">Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5">Ejercicio 5</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analítica de los Negocios - Soluciones Parcial I</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="ejercicio-0" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-0">Ejercicio 0</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"bechdel_data.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Arranging the test</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">bechdel_test =</span> <span class="fu">fct_relevel</span>(bechdel_test, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"fewer than two women"</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"women don’t talk to each other"</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"women only talk about men"</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"dubious"</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"passes test"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(bechdel_test)  <span class="co"># Reorders the rows based on the new factor levels</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(bechdel_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,794
+Columns: 8
+$ year          &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2012, 2012, 2012, 20…
+$ decade        &lt;chr&gt; "2000-2013", "2000-2013", "2000-2013", "2000-2013", "200…
+$ title         &lt;chr&gt; "Cloudy with a Chance of Meatballs 2", "Gravity", "Jack …
+$ binary        &lt;chr&gt; "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", "FAIL", …
+$ bechdel_test  &lt;fct&gt; fewer than two women, fewer than two women, fewer than t…
+$ budget_2013   &lt;dbl&gt; 78.000000, 110.000000, 195.000000, 30.000000, 19.200000,…
+$ domgross_2013 &lt;dbl&gt; 119.640264, 271.814796, 65.187603, 19.316646, NA, 2.3225…
+$ intgross_2013 &lt;dbl&gt; 271.725448, 708.714796, 197.387603, 62.616646, NA, 22.59…</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicio-1" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h2>
+<ol type="a">
+<li>Las dos gráficas son:</li>
+</ol>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-4-1.svg" class="quarto-discovered-preview-image img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>decade, <span class="at">fill=</span>bechdel_test)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Decade"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Proportion"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Bechdel Test"</span>)<span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-6-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>¿Qué vemos en nuestra muestra?</li>
+</ol>
+<ol type="1">
+<li><p>Basados en el primer gráfico, la mayoría de las películas fueron estrenadas en el período del 2000-2013. Las barras son más altas en esta categoría.</p></li>
+<li><p>Basados en el primer gráfico, la segunda década con mayor cantidad de observaciones en nuestros datos es el período 1990-2000.</p></li>
+<li><p>Basados en el segundo gráfico, la proporción de películas que pasa el test de Bechdel ha ido aumentando a través del tiempo.</p></li>
+<li><p>Basados en el segundo gráfico, la proporción de películas de la categoría “<em>women don´t talk to each other</em>” disminuye a través del tiempo.</p></li>
+<li><p>Basados en el segundo gráfico, la proporción de películas de las categorías “<em>fewer than two women</em>” y “<em>dubious</em>” no parecen tener un patrón. A veces aumentan, a veces disminuyen.</p></li>
+</ol>
+</section>
+<section id="ejercicio-2" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h2>
+<ol type="a">
+<li><p>La única medida de tendencia central que nos proporciona un diagrama de caja es la <strong>mediana</strong>. La idea era decir cualquiera cosa sobre la mediana. Por ejemplo, las siguientes conclusiones son válidas:</p>
+<ul>
+<li><p>Películas en la categoría “<em>women don´t talk to each other</em>” tienen la mayor mediana</p></li>
+<li><p>Películas en la categoría “<em>passes test</em>” tienen la menor mediana</p></li>
+<li><p>La mediana de las películas en la categoría “<em>women don´t talk to each other</em>” es cercana a 50 millones de dólares</p></li>
+</ul></li>
+<li><p>La única medida de dispersión que nos proporciona un diagrama de caja es el <strong>rango intercuartílico</strong> (RIC). En este caso, cualquiera de las categorías entre “<em>dubious</em>”, “<em>women don´t talk to each other</em>” o “<em>fewer than two women</em>” era correcta. Lo importante era argumentar que no debían invertir en esa categoría porque tiene la mayor variabilidad al presentar el mayor rango intercuartílico.</p></li>
+<li><p>Cualquier conclusión en la misma dirección que las siguientes afirmaciones era válida:</p>
+<ul>
+<li><p>La distribución del presupuesto de películas de la categoría “<em>dubious</em>” presentan la menor cantidad de datos atípicos</p></li>
+<li><p>La distribución del presupuesto de películas de la categoría “<em>passes test</em>” presentan la mayor cantidad de datos atípicos</p></li>
+</ul></li>
+<li><p>La distribución del presupuesto de películas de la categoría “<em>women don´t talk to each other</em>” es la más simétrica porque es aquella caja donde la mediana está más cerca a la mitad de la misma.</p></li>
+<li><p>El código de la gráfica es:</p></li>
+</ol>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bechdel_data, <span class="fu">aes</span>(<span class="at">x=</span>(budget_2013), <span class="at">y=</span>bechdel_test)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Budget in 2013 dollars (millions)"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Bechdel Test"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-8-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-9-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Además, las correlaciones entre los recaudos y el presupuesto son:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-10-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>Sí, la relación observada en los gráficos de dispersión es consistente con los valores de correlación obtenidos. ¿Por qué?</p>
+<ul>
+<li><p>En los gráficos se nota que las películas con mayor presupuesto tienden a generar mayores ingresos, lo que es coherente con las correlaciones positivas obtenidas.</p></li>
+<li><p>La correlación con la recaudación internacional es más alta (0.59 en comparación 0.46), lo que también se refleja en el gráfico derecho, donde los ingresos internacionales parecen aumentar más rápidamente con el presupuesto en comparación con los ingresos domésticos. Otra manera de describir esto es que la pendiente de la recta era mayor para la recaudación internacional.</p></li>
+</ul></li>
+<li><p>Este punto era más para que pensaran sobre el contexto de los datos. No había una única respuesta correcta. Algunos factores que podían explicar la diferencia en la correlación entre el presupuesto y los ingresos domésticos (0.46) vs.&nbsp;los ingresos internacionales (0.59) podrían ser:</p>
+<ol type="1">
+<li><p>Las películas con presupuestos altos suelen estar diseñadas para atraer audiencias globales y pueden beneficiarse de mercados más grandes. En muchos casos, los blockbusters generan más ingresos fuera de EE.UU. que en el mercado doméstico.</p></li>
+<li><p>Algunas películas pueden no tener el mismo impacto en el mercado local que en mercados extranjeros. Por ejemplo, franquicias de acción y ciencia ficción suelen tener una mayor demanda global.</p></li>
+<li><p>Las películas con presupuestos más grandes tienen estrategias de marketing global que maximizan su alcance en mercados internacionales, lo que puede hacer que sus ingresos crezcan más allá de lo que se observa en EE.UU.</p></li>
+<li><p>Los ingresos internacionales pueden estar influenciados por fluctuaciones en tasas de cambio y la creciente importancia de mercados como China e India, donde algunas películas tienen un rendimiento muy alto.</p></li>
+<li><p>Algunos países tienen cuotas de películas extranjeras o preferencias por ciertas producciones, lo que podría afectar la forma en que el presupuesto impacta los ingresos en diferentes regiones.</p></li>
+</ol></li>
+<li><p>Si <span class="math inline">\(\text{Budget}\sim N(70,15)\)</span>, entonces calculamos el área bajo la curva normal usando <code>pnorm()</code> de la siguiente manera:</p></li>
+</ol>
+<div class="cell" data-layout-align="center" data-fig.asp="0.4">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-12-1.svg" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">90</span>, <span class="at">mean=</span><span class="dv">70</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09121122</code></pre>
+</div>
+</div>
+<p>La otra manera era:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">90</span>, <span class="at">mean=</span><span class="dv">70</span>, <span class="at">sd=</span><span class="dv">15</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09121122</code></pre>
+</div>
+</div>
+<p>Sin embargo, la pregunta es ¿cuántas películas de nuestra muestra superan los 90 millones? Para esto, multiplicamos ese porcentaje/proporción 0.09 por 1794 películas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">90</span>, <span class="at">mean=</span><span class="dv">70</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>p<span class="sc">*</span><span class="dv">1794</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 163.6329</code></pre>
+</div>
+</div>
+<p>La respuesta es que aproximadamente 163 películas tienen un presupuesto mayor a 90 millones de dólares.</p>
+<ol start="4" type="a">
+<li>Si <span class="math inline">\(\text{Budget}\sim N(70,15)\)</span>, entonces calculamos el percentil 90 de una curva normal usando <code>qnorm()</code> de la siguiente manera:</li>
+</ol>
+<div class="cell" data-layout-align="center" data-fig.asp="0.4">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_sol_files/figure-html/unnamed-chunk-16-1.svg" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.90</span>, <span class="at">mean=</span><span class="dv">70</span>, <span class="at">sd=</span><span class="dv">15</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 89.22327</code></pre>
+</div>
+</div>
+<p>Es decir, un presupuesto de 89.22 millones de dólares es el percentil 90.</p>
+</section>
+<section id="ejercicio-4" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-4">Ejercicio 4</h2>
+<ol type="a">
+<li>El código sería:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pass_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(binary <span class="sc">==</span> <span class="st">"PASS"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>budget_2013, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  pass_data$budget_2013
+t = 27.002, df = 802, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 42.91018 49.63816
+sample estimates:
+mean of x 
+ 46.27417 </code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Las películas que pasan el test de Bechdel tienen un presupuesto entre 42.9 y 49.6 millones de dólares a un nivel de confianza del 95%.</li>
+</ol>
+<p>En este caso, la recomendación sería que no inviertan en estas películas ya que el presupuesto es menor a los 50 millones que ellos están buscando.</p>
+<ol start="3" type="a">
+<li>En este caso, el código sería:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pass_data<span class="sc">$</span>budget_2013, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  pass_data$budget_2013
+t = 27.002, df = 802, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+99 percent confidence interval:
+ 41.84928 50.69905
+sample estimates:
+mean of x 
+ 46.27417 </code></pre>
+</div>
+</div>
+<p>La recomendación sería que sí inviertieran puesto que el intervalo de confianza al 99% incluye los 50 millones de presupuesto.</p>
+<ol start="4" type="a">
+<li><p>Las implicaciones son:</p>
+<ol type="1">
+<li><p>Al aumentar el nivel de confianza, el intervalo de confianza se hace más grande. Esto significa que la empresa tendrá una estimación menos precisa del presupuesto medio, ya que el rango de valores posibles será mayor.</p></li>
+<li><p>Sin embargo, es más probable de que el intervalo incluya el presupuesto promedio real. Esto es útil si la empresa quiere minimizar el riesgo de tomar decisiones basadas en una estimación incorrecta del presupuesto.</p></li>
+</ol></li>
+</ol>
+<p>En conclusión, aumentar el nivel de confianza mejora la seguridad en la estimación, pero a costa de perder precisión, lo que puede afectar la toma de decisiones si el intervalo se vuelve demasiado amplio.</p>
+</section>
+<section id="ejercicio-5" class="level2">
+<h2 class="anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h2>
+<ol type="a">
+<li>La hipótesis nula (<span class="math inline">\(H_0\)</span>) en este análisis debería ser que no hay diferencia significativa en el retorno de inversión (ROI) entre las películas que pasan el test de Bechdel y las que no lo pasan. Matemáticamente, esto se puede expresar como:</li>
+</ol>
+<p><span class="math display">\[H_0: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}=0\]</span></p>
+<p>También es válida:</p>
+<p><span class="math display">\[H_0: \mu_{\text{Bechdel}} = \mu_{\text{No Bechdel}}\]</span></p>
+<ol start="2" type="a">
+<li><p>El error Tipo II ocurre cuando no se rechaza la hipótesis nula (<span class="math inline">\(H_0\)</span>) cuando en realidad es falsa. En este caso, significaría concluir que <strong>no hay diferencia en el retorno de inversión (ROI) entre películas con mayor representación femenina y aquellas que no la tienen, cuando en realidad sí existe una diferencia significativa</strong>. Si esto sucede, los productores de cine podrían seguir justificando la falta de inversión en películas con mayor representación femenina, basándose en la creencia errónea de que estas no son rentables.</p></li>
+<li><p>Sí, la respuesta cambiaría porque el error Tipo I sería más preocupante. El error Tipo I ocurre cuando se concluye erróneamente que <strong>hay una diferencia significativa en el retorno de inversión (ROI) entre películas con mayor representación femenina y aquellas que no la tienen, cuando en realidad no existe tal diferencia</strong>. Si la empresa toma decisiones de inversión basándose en este resultado erróneo, podría asignar presupuesto a películas con mayor representación femenina esperando un ROI superior, pero sin una base real para justificarlo. Esto podría llevar a inversiones menos rentables, afectando la sostenibilidad financiera del estudio.</p></li>
+<li><p>El código está evaluando si hay diferencia significativa en el retorno doméstico entre películas que pasan el test de Bechdel y películas que no lo pasan:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bechdel_data <span class="ot">&lt;-</span> bechdel_data <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">roi_us =</span> domgross_2013 <span class="sc">-</span> budget_2013)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>test_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(roi_us <span class="sc">~</span> binary, <span class="at">data =</span> bechdel_data, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>test_budget</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  roi_us by binary
+t = 2.2541, df = 1699.6, p-value = 0.02432
+alternative hypothesis: true difference in means between group FAIL and group PASS is not equal to 0
+99 percent confidence interval:
+ -1.657665 24.675980
+sample estimates:
+mean in group FAIL mean in group PASS 
+          44.43038           32.92122 </code></pre>
+</div>
+</div>
+<p>Las hipótesis serían:</p>
+<p><span class="math display">\[H_0: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}=0\]</span></p>
+<p><span class="math display">\[H_A: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}\neq0\]</span></p>
+<p>En este caso <span class="math inline">\(\mu\)</span> es el retorno promedio en el mercado estadounidense (<code>roi_us = domgross_2013 - budget_2013</code>).</p>
+<p>La decisión es <strong>no rechazar la <span class="math inline">\(H_0\)</span></strong> porque:</p>
+<ol type="1">
+<li><span class="math inline">\(p &gt; \alpha\)</span> entonces no se rechaza</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>test_budget<span class="sc">$</span>p.value<span class="sc">&lt;</span><span class="fl">0.01</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>El intervalo de confianza [-1.65, 24.67] incluye el 0.</p></li>
+<li><p>El valor crítico a un <span class="math inline">\(\alpha=0.01\)</span> es:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.995</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.575829</code></pre>
+</div>
+</div>
+<p>Entonces <span class="math inline">\(t = 2.25 &lt; 2.57 = t_{\alpha}\)</span>.</p>
+<p>Por lo tanto, no hay suficiente evidencia con un nivel de significancia al 1% para afirmar que las películas que pasan el test de Bechdel tienen un ROI significativamente diferente de las que no lo pasan.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

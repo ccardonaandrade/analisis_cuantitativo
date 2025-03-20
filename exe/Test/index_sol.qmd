@@ -1,0 +1,450 @@
+---
+title: "Analítica de los Negocios - Soluciones Parcial I"
+
+lang: es
+
+format: 
+  closeread-html:
+   css: msaz.css
+   code-tools: false
+   fig-format: svg
+   toc: true
+   linkcolor: tomato
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+
+
+setwd("C:/Users/ccard/OneDrive/Documentos/GitHub/analisis_cuantitativo/exe/Test")
+
+```
+
+## Ejercicio 0
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+library(tidyverse)
+
+bechdel_data <- read.csv("bechdel_data.csv")
+
+# Arranging the test
+
+bechdel_data <- bechdel_data |> mutate(bechdel_test = fct_relevel(bechdel_test, 
+                                    "fewer than two women", 
+                                    "women don’t talk to each other", 
+                                    "women only talk about men", 
+                                    "dubious", 
+                                    "passes test")) |> 
+  arrange(bechdel_test)  # Reorders the rows based on the new factor levels
+  
+  
+glimpse(bechdel_data)
+```
+
+
+## Ejercicio 1
+
+a) Las dos gráficas son:
+
+::: {.columns}
+::: {.column width=50%}
+
+```{r}
+#| eval: false
+#| echo: true
+
+
+ggplot(bechdel_data, aes(x=decade, fill=bechdel_test)) +
+  geom_bar(position = "dodge") +
+  labs(x="Decade",
+       y="Frequency",
+       fill="Bechdel Test")+
+  theme_minimal()
+
+```
+:::
+
+::: {.column width=50%}
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| fig-align: center
+
+ggplot(bechdel_data, aes(x=decade, fill=bechdel_test)) +
+  geom_bar(position = "dodge") +
+  labs(x="Decade",
+       y="Frequency",
+       fill="Bechdel Test")+
+  theme_minimal()
+
+```
+
+:::
+:::
+
+
+::: {.columns}
+::: {.column width=50%}
+
+```{r}
+#| eval: false
+#| echo: true
+
+
+ggplot(bechdel_data, aes(x=decade, fill=bechdel_test)) +
+  geom_bar(position = "fill") +
+  labs(x="Decade",
+       y="Proportion",
+       fill="Bechdel Test")+
+  theme_minimal()
+
+```
+:::
+
+::: {.column width=50%}
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| fig-align: center
+
+ggplot(bechdel_data, aes(x=decade, fill=bechdel_test)) +
+  geom_bar(position = "fill") +
+  labs(x="Decade",
+       y="Proportion",
+       fill="Bechdel Test")+
+  theme_minimal()
+
+```
+
+:::
+:::
+
+b) ¿Qué vemos en nuestra muestra?
+
+1. Basados en el primer gráfico, la mayoría de las películas fueron estrenadas en el período del 2000-2013. Las barras son más altas en esta categoría.
+
+2. Basados en el primer gráfico, la segunda década con mayor cantidad de observaciones en nuestros datos es el período 1990-2000.
+
+3. Basados en el segundo gráfico, la proporción de películas que pasa el test de Bechdel ha ido aumentando a través del tiempo.
+
+4. Basados en el segundo gráfico, la proporción de películas de la categoría "*women don´t talk to each other*" disminuye a través del tiempo.
+
+5. Basados en el segundo gráfico, la proporción de películas de las categorías "*fewer than two women*" y "*dubious*" no parecen tener un patrón. A veces aumentan, a veces disminuyen.
+
+
+## Ejercicio 2
+
+a) La única medida de tendencia central que nos proporciona un diagrama de caja es la **mediana**. La idea era decir cualquiera cosa sobre la mediana. Por ejemplo, las siguientes conclusiones son válidas:
+
+    - Películas en la categoría "*women don´t talk to each other*" tienen la mayor mediana
+  
+    - Películas en la categoría "*passes test*" tienen la menor mediana
+  
+    - La mediana de las películas en la categoría "*women don´t talk to each other*" es cercana a 50 millones de dólares
+  
+b) La única medida de dispersión que nos proporciona un diagrama de caja es el **rango intercuartílico** (RIC). En este  caso, cualquiera de las categorías entre "*dubious*", "*women don´t talk to each other*" o "*fewer than two women*" era correcta. Lo importante era argumentar que no debían invertir en esa categoría porque tiene la mayor variabilidad al presentar el mayor rango intercuartílico. 
+
+c) Cualquier conclusión en la misma dirección que las siguientes afirmaciones era válida:
+
+    - La distribución del presupuesto de películas de la categoría "*dubious*" presentan la menor cantidad de datos atípicos
+  
+    - La distribución del presupuesto de películas de la categoría "*passes test*" presentan la mayor cantidad de datos atípicos
+  
+  
+d) La distribución del presupuesto de películas de la categoría "*women don´t talk to each other*" es la más simétrica porque es aquella caja donde la mediana está más cerca a la mitad de la misma.
+
+e) El código de la gráfica es:
+
+::: {.columns}
+::: {.column width=50%}
+
+```{r}
+#| eval: false
+#| echo: true
+
+
+ggplot(bechdel_data, aes(x=(budget_2013), y=bechdel_test)) +
+  geom_boxplot() +
+  labs(x="Budget in 2013 dollars (millions)",
+       y="Bechdel Test") +
+  theme_minimal()
+
+```
+:::
+
+::: {.column width=50%}
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| fig-align: center
+
+ggplot(bechdel_data, aes(x=(budget_2013), y=bechdel_test)) +
+  geom_boxplot() +
+  labs(x="Budget in 2013 dollars (millions)",
+       y="Bechdel Test") +
+  theme_minimal()
+
+```
+
+:::
+:::
+
+## Ejercicio 3
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+
+library(patchwork)
+library(corrplot)
+p1 <- ggplot(bechdel_data, aes(x=budget_2013, y=domgross_2013)) +
+  geom_point() + geom_smooth()+
+  labs(x="Budget in 2013 dollars (millions)",
+       y="Domestic Gross in 2013 dollars (millions)")+
+  theme_minimal()
+
+p2  <- ggplot(bechdel_data, aes(x=budget_2013, y=intgross_2013)) +
+  geom_point() + geom_smooth()+
+  labs(x="Budget in 2013 dollars (millions)",
+       y="International Gross in 2013 dollars (millions)")+
+  theme_minimal()
+
+p1+p2
+
+
+```
+
+Además, las correlaciones entre los recaudos y el presupuesto son:
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| fig-align: center
+
+monetary_vars <- bechdel_data |>
+  select(budget_2013, domgross_2013, intgross_2013)
+
+corrplot(cor(monetary_vars, use = "complete.obs"),method = "number",type = "upper")
+
+```
+
+
+a) Sí, la relación observada en los gráficos de dispersión es consistente con los valores de correlación obtenidos. ¿Por qué?
+
+    - En los gráficos se nota que las películas con mayor presupuesto tienden a generar mayores ingresos, lo que es coherente con las correlaciones positivas obtenidas.
+  
+    - La correlación con la recaudación internacional es más alta (0.59 en comparación 0.46), lo que también se refleja en el gráfico derecho, donde los ingresos internacionales parecen aumentar más rápidamente con el presupuesto en comparación con los ingresos domésticos. Otra manera de describir esto es que la pendiente de la recta era mayor para la recaudación internacional.
+
+b) Este punto era más para que pensaran sobre el contexto de los datos. No había una única respuesta correcta. Algunos factores que podían explicar la diferencia en la correlación entre el presupuesto y los ingresos domésticos (0.46) vs. los ingresos internacionales (0.59) podrían ser:
+
+    1. Las películas con presupuestos altos suelen estar diseñadas para atraer audiencias globales y pueden beneficiarse de mercados más grandes.
+En muchos casos, los blockbusters generan más ingresos fuera de EE.UU. que en el mercado doméstico.
+
+    2. Algunas películas pueden no tener el mismo impacto en el mercado local que en mercados extranjeros. Por ejemplo, franquicias de acción y ciencia ficción suelen tener una mayor demanda global.
+
+    3. Las películas con presupuestos más grandes tienen estrategias de marketing global que maximizan su alcance en mercados internacionales, lo que puede hacer que sus ingresos crezcan más allá de lo que se observa en EE.UU.
+
+    4. Los ingresos internacionales pueden estar influenciados por fluctuaciones en tasas de cambio y la creciente importancia de mercados como China e India, donde algunas películas tienen un rendimiento muy alto.
+
+    5. Algunos países tienen cuotas de películas extranjeras o preferencias por ciertas producciones, lo que podría afectar la forma en que el presupuesto impacta los ingresos en diferentes regiones.
+  
+  
+c) Si $\text{Budget}\sim N(70,15)$, entonces calculamos el área bajo la curva normal usando `pnorm()` de la siguiente manera:
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+library(openintro)
+```
+
+
+```{r}
+#| echo: false
+#| eval: true
+#| error: false
+#| fig-asp: 0.4
+#| out-width: 60%
+#| fig-align: center
+#| fig-width: 5
+
+par(mar = c(2, 0, 0, 0))
+normTail(m = 70, s = 15, U = 90, col = IMSCOL["blue", "full"])
+```
+
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+pnorm(90, mean=70, sd=15, lower.tail = FALSE)
+```
+
+La otra manera era:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+1 - pnorm(90, mean=70, sd=15)
+```
+
+Sin embargo, la pregunta es ¿cuántas películas de nuestra muestra superan los 90 millones? Para esto, multiplicamos ese porcentaje/proporción `r round(pnorm(90, mean=70, sd=15, lower.tail = FALSE), 2)` por 1794 películas.
+
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+p <- pnorm(90, mean=70, sd=15, lower.tail = FALSE)
+p*1794
+```
+
+La respuesta es que aproximadamente 163 películas tienen un presupuesto mayor a 90 millones de dólares.
+
+d) Si $\text{Budget}\sim N(70,15)$, entonces calculamos el percentil 90 de una curva normal usando `qnorm()` de la siguiente manera:
+
+```{r}
+#| fig-asp: 0.4
+#| out-width: 60%
+#| fig-align: center
+#| fig-width: 5
+#| echo: false
+par(mar = c(2, 0, 0, 0))
+normTail(70, 15, L = qnorm(0.90, 70, 15), col = IMSCOL["blue", "full"])
+```
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+qnorm(0.90, mean=70, sd=15)
+```
+
+Es decir, un presupuesto de 89.22 millones de dólares es el percentil 90.
+
+## Ejercicio 4
+ 
+a) El código sería:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+
+pass_data <- bechdel_data |>
+  filter(binary == "PASS")
+
+t.test(pass_data$budget_2013, conf.level = 0.95)
+```
+
+b) Las películas que pasan el test de Bechdel tienen un presupuesto entre 42.9 y 49.6 millones de dólares a un nivel de confianza del 95%.
+
+En este caso, la recomendación sería que no inviertan en estas películas ya que el presupuesto es menor a los 50 millones que ellos están buscando.
+
+c) En este caso, el código sería:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+t.test(pass_data$budget_2013, conf.level = 0.99)
+```
+
+La recomendación sería que sí inviertieran puesto que el intervalo de confianza al 99% incluye los 50 millones de presupuesto.
+
+d) Las implicaciones son:
+
+    1. Al aumentar el nivel de confianza, el intervalo de confianza se hace más grande. Esto significa que la empresa tendrá una estimación menos precisa del presupuesto medio, ya que el rango de valores posibles será mayor.
+    
+    2. Sin embargo, es más probable de que el intervalo incluya el presupuesto promedio real. Esto es útil si la empresa quiere minimizar el riesgo de tomar decisiones basadas en una estimación incorrecta del presupuesto.
+    
+En conclusión, aumentar el nivel de confianza mejora la seguridad en la estimación, pero a costa de perder precisión, lo que puede afectar la toma de decisiones si el intervalo se vuelve demasiado amplio.
+
+
+## Ejercicio 5
+
+a) La hipótesis nula ($H_0$) en este análisis debería ser que no hay diferencia significativa en el retorno de inversión (ROI) entre las películas que pasan el test de Bechdel y las que no lo pasan. Matemáticamente, esto se puede expresar como:
+
+$$H_0: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}=0$$
+
+También es válida:
+
+$$H_0: \mu_{\text{Bechdel}} = \mu_{\text{No Bechdel}}$$
+
+b) El error Tipo II ocurre cuando no se rechaza la hipótesis nula ($H_0$) cuando en realidad es falsa. En este caso, significaría concluir que **no hay diferencia en el retorno de inversión (ROI) entre películas con mayor representación femenina y aquellas que no la tienen, cuando en realidad sí existe una diferencia significativa**. Si esto sucede, los productores de cine podrían seguir justificando la falta de inversión en películas con mayor representación femenina, basándose en la creencia errónea de que estas no son rentables.
+
+c) Sí, la respuesta cambiaría porque el error Tipo I sería más preocupante. El error Tipo I ocurre cuando se concluye erróneamente que **hay una diferencia significativa en el retorno de inversión (ROI) entre películas con mayor representación femenina y aquellas que no la tienen, cuando en realidad no existe tal diferencia**. Si la empresa toma decisiones de inversión basándose en este resultado erróneo, podría asignar presupuesto a películas con mayor representación femenina esperando un ROI superior, pero sin una base real para justificarlo. Esto podría llevar a inversiones menos rentables, afectando la sostenibilidad financiera del estudio.
+
+
+d) El código está evaluando si hay diferencia significativa en el retorno doméstico entre películas que pasan el test de Bechdel y películas que no lo pasan:
+
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+
+bechdel_data <- bechdel_data |>
+  mutate(roi_us = domgross_2013 - budget_2013)
+
+test_budget <- t.test(roi_us ~ binary, data = bechdel_data, conf.level = 0.99)
+
+test_budget
+
+```
+
+Las hipótesis serían:
+
+
+$$H_0: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}=0$$
+
+$$H_A: \mu_{\text{Bechdel}} - \mu_{\text{No Bechdel}}\neq0$$
+
+En este caso $\mu$ es el retorno promedio en el mercado estadounidense (`roi_us = domgross_2013 - budget_2013`).
+
+La decisión es **no rechazar la $H_0$** porque:
+
+1.  $p > \alpha$ entonces no se rechaza
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+test_budget$p.value<0.01
+```
+
+2. El intervalo de confianza [-1.65, 24.67] incluye el 0.
+
+
+3. El valor crítico a un $\alpha=0.01$ es:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+qnorm(0.995, mean=0, sd=1)
+```
+
+Entonces $t = 2.25 < 2.57 = t_{\alpha}$.
+
+Por lo tanto, no hay suficiente evidencia con un nivel de significancia al 1%  para afirmar que las películas que pasan el test de Bechdel tienen un ROI significativamente diferente de las que no lo pasan.
