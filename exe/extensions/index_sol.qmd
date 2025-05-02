@@ -1,0 +1,399 @@
+---
+title: "Analítica de los Negocios"
+subtitle: "Parcial II - Soluciones"
+
+lang: es
+
+format: 
+  closeread-html:
+   css: msaz.css
+   code-tools: false
+   fig-format: svg
+   toc: true
+   toc-location: left
+   linkcolor: tomato
+   
+toc-title: "Explora el contenido"
+---
+
+```{r}
+#| echo: false
+#| warning: false
+# Acá van todos los paquetes necesarios para correr el código
+library(fontawesome)
+library(tidyverse)
+library(openintro)
+library(scales)
+library(ggmosaic)
+library(tidymodels)
+```
+
+
+```{r}
+#| label: blizzard-data-prep
+#| echo: false
+
+blizzard_salary <- blizzard_salary |>
+  mutate(
+    salario_anual = case_when(
+      salary_type == "week" ~ current_salary * 52,
+      salary_type == "hour" ~ current_salary * 40 * 52,
+      TRUE ~ current_salary
+    ),
+    performance_rating = if_else(performance_rating == "Developing", "Poor", performance_rating)
+  ) |>
+  filter(salary_type != "week") |>
+  mutate(
+    salary_type = if_else(salary_type == "hour", "Contrato por Hora", "Contrato Fijo")
+  ) |>
+  filter(!is.na(salario_anual)) |>
+  select(percent_incr, salary_type, salario_anual, performance_rating) |>
+  rename(incr_porcentual = percent_incr,
+         tipo_contrato = salary_type,
+         rating_performance = performance_rating)  |>
+  mutate(salario_anual = ifelse(salario_anual < 20000, 25000, salario_anual),
+         rating_performance = fct_recode(rating_performance,
+                                         "Malo" = "Poor",
+                                         "Normal" = "Successful",
+                                         "Bueno" = "High",
+                                         "Excelente" = "Top"))
+```
+
+
+### Preliminares
+
+El primer paso es cargar los paquetes que usaremos y los datos:
+
+```{r}
+#| echo: true
+#| warning: false
+#| eval: false
+# El paquete estrella!
+library(tidyverse)
+# El paquete broom es para visualizar la regresión de mejor manera
+library(broom)
+
+# Cargamos el archivo ".csv"
+blizzard_salary <- read.csv("blizzard_salary.csv")
+```
+
+
+
+### Pregunta 1
+
+```{r}
+#| echo: true
+#| warning: false
+#| out-width: 80%
+#| fig-align: center
+
+
+ggplot(blizzard_salary) +
+  geom_boxplot(aes(x=incr_porcentual)) +
+  labs(x="Incremento Porcentual %") +
+  theme_minimal()
+```
+
+Cualquiera de los siguientes puntos es válido:
+
+- Hay presencia de datos atípicos, con aumentos mayores al 5%. Estos outliers sesgan la distribución a la derecha. 
+
+- La mediana esta alrededor de 2.5%
+
+- El Rango Intercuartílico es pequeño por lo que hay poca variabilidad 
+
+
+### Pregunta 2
+
+```         
+# A tibble: 2 x 3
+  tipo_contrato     salario_anual_promedio salario_anual_mediana
+  <chr>                              <dbl>                 <dbl>
+1 Contrato Fijo                     90472.                83381 
+2 Contrato por Hora                 63003.                _____
+```
+
+El código para obtener la salida es:
+
+```{r}
+#| echo: true
+
+blizzard_salary |> 
+  group_by(tipo_contrato) |> 
+  summarise(salario_anual_promedio=mean(salario_anual),
+            salario_anual_mediana=median(salario_anual))
+```
+
+
+
+¿Cuál de los siguientes valores es el **mejor estimado** para el número faltante? 
+
+El valor más cercano a 54,246 es:
+
+b.  50,000
+
+
+### Pregunta 3
+
+El código para resolver esta pregunta es:
+
+```{r}
+#| echo: true
+blizzard_salary |> 
+  group_by(rating_performance) |> 
+  summarise(salario_anual_sd=sd(salario_anual))
+```
+
+¿Cuál de las distribuciones de salario anual tiene una desviación estándar mayor?
+
+a.  Trabajadores con nivel bueno en su performance
+
+
+Las razones pueden ser:
+
+- Los trabajadores con buen desempeño pueden recibir bonificaciones, ascensos o aumentos salariales personalizados.
+
+- Los trabajadores con bajo desempeño suelen estar estancados en el mismo nivel salarial (sin aumentos ni bonos).
+
+Pueden haber más razones. La idea era que pensaran en el contexto.
+
+### Pregunta 4
+
+Creen una nueva variable `aumento` que sea el incremento en el salario que tendrían los trabajadores luego de 2020 (Se multiplicaría el salario anual por`(incr_porcentual/100)`). Uno de sus colegas le pide graficar la dispersión entre las variables `aumento` y `salario_anual`. ¿Cuál sería su conclusión sobre la relación entre el salario base y el incremento basándose en la gráfica?
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| eval: true
+#| out-width: 80%
+#| fig-align: center
+
+
+blizzard_salary <- blizzard_salary |> 
+  mutate(aumento=salario_anual*(incr_porcentual/100))
+
+ggplot(blizzard_salary, aes(x=salario_anual, y=aumento))+
+  geom_point()+
+    labs(
+    y = "Aumento (en USD)",
+    x = "Salario Anual (en USD)"
+  ) +
+  theme_minimal()
+```
+
+La gráfica sugiere que el aumento está positivamente relacionado con el nivel de salario anual. Resultado que se corrobora con los resultados de la regresión en el punto 5. 
+
+
+### Pregunta 5
+
+Estimemos la regresión en R:
+
+$$\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}$$
+
+
+```{r}
+#| echo: true
+#| warning: false
+aumento_1 <- lm(incr_porcentual ~ salario_anual, data= blizzard_salary)
+tidy(aumento_1)
+```
+
+- Como es un modelo en niveles, la interpretación sería: un aumento de 1 dólar en el salario anual, está asociado a un aumento promedio de 0.0000159%. 
+
+- Las opciones describen es un aumento de 1000 dólares, por lo tanto, se multiplica el coeficiente por 1000. 
+
+- Un aumento de mil dórates, estaría asociado a un incremento promedio de (0.0000159\*1000)= 0.0159% en el incremento porcentual.
+
+
+
+
+¿Cual de las siguientes interpretaciones es la mejor para el coeficiente de la pendiente?
+
+c. Por cada \$1,000 de salario anual, el modelo predice que el aumento salarial será mayor por 0.0159% en promedio.
+
+### Pregunta 6
+
+La prueba de hipótesis es:
+
+$$H_0: \beta_1=0$$
+
+$$H_0: \beta_1\neq0$$
+
+```{r}
+#| echo: true
+#| warning: false
+tidy(aumento_1)
+```
+
+Con esta salida había dos maneras de realizar la prueba de hipótesis. 
+
+1. Al 5%, el $t^*=1.96$. Para el coeficiente $\hat{\beta_1}$, el t es $t=3.48$. Entonces
+
+$$t=3.48>1.96=t^*$$
+
+Por lo tanto, rechazo $H_0$.
+
+2. La otra manera era usando el p-value. El p-value de acuerdo a la tabla es 0.000571. Como la prueba es al 5%:
+
+$$p=0.000571<0.05$$
+Usando este criterio, también rechazo $H_0$.
+
+
+### Pregunta 7
+
+```{r}
+#| echo: true
+#| warning: false
+#| out-width: 80%
+#| fig-align: center
+
+
+augment(aumento_1) %>%
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept=0, color ="darkred") +
+  labs(x = "Valores predichos", y = "Residuos")  +
+  theme_minimal()
+```
+
+Al ver la gráfica de arriba no vemos ningún patrón en los errores y la varianza (salvo para las observaciones después de 4.5 en los valores predichos) parece constante. En este punto no voy a ser tan estricto con la explicación siempre y cuando haya cierta coherencia en la respuesta.
+
+
+La gráfica de la distribución de los errores evidencia un sesgo a la derecha. Así, ambas gráficas nos están sugiriendo que hay valores atípicos (outliers) hacia la derecha. En todo caso, si la respuesta es medianamante coherente no importa si dijeron que era normal o no.
+
+```{r}
+#| echo: true
+#| warning: false
+#| out-width: 80%
+#| fig-align: center
+
+augment(aumento_1) %>%
+  ggplot(aes(x = .resid)) +
+  geom_histogram() +
+  labs(title = "Distribución de los residuos",
+       x = "Errores") +
+  theme_minimal()
+```
+
+
+### Pregunta 8
+
+Para estimar los modelos, creo primero las variables dummy:
+
+```{r}
+#| echo: true
+#| warning: false
+blizzard_salary <- blizzard_salary |> 
+  mutate(contrato_fijo=ifelse(tipo_contrato == "Contrato Fijo", 1, 0),
+         malo=ifelse(rating_performance == "Malo", 1, 0),
+         normal=ifelse(rating_performance == "Normal", 1, 0),
+         excelente=ifelse(rating_performance == "Excelente", 1, 0))
+```
+
+
+Ahora sí estimo ambos modelos:
+
+```{r}
+#| echo: true
+#| warning: false
+modelo_1 <- lm(incr_porcentual ~ salario_anual + contrato_fijo, 
+               data= blizzard_salary)
+modelo_2 <- lm(incr_porcentual ~ salario_anual + malo + normal + excelente,
+               data= blizzard_salary)
+```
+
+
+
+El criterio para elegir cuál modelo es mejor (por ahora) es el $R^2$:
+
+```{r}
+#| echo: true
+#| warning: false
+glance(modelo_1)
+glance(modelo_2)
+```
+
+Mientras que el `modelo_2` explica el 25% de la variación en el incremento porcentual, el `modelo_1` explica solo el 4%. Bajo este criterio, el `modelo_2` es mejor prediciendo la variable dependiente.
+
+
+### Pregunta 9
+
+```{r}
+#| echo: false
+
+raise_2_fit <- linear_reg() |>
+  fit(incr_porcentual ~ salario_anual + rating_performance, data = blizzard_salary)
+
+tidy(raise_2_fit)
+```
+
+Cuando uno de sus colegas ve el resultado de la estimación, comenta: 'El coeficiente para `nivel_performanceNormal` es negativo, ¡qué raro! Supongo que significa que las personas con desempeño Normal reciben un aumento menor.' ¿Es correcto su comentario? Si no lo es, expliquen por qué.
+
+**Respuesta:**
+
+Uno debería decirle al colega que esa interpretación no es totalmente correcta. Según la estimación, alguien con un desempeño `Normal` no tiene menos incremento en el salario sino que el incremento es menor, en promedio, que el incremento de la categoría referencia, que en este caso, son los trabajadores con desempeño `Bueno`.
+
+
+### Pregunta 10
+
+El modelo que se está estimando es:
+
+
+$$\widehat{\text{Incremento Porcentual}}=\hat{\beta_0}+\hat{\beta_1}\times \text{Salario Anual}+\hat{\beta_2} \times \text{Contrato por Hora}$$
+Los coeficientes estimados son:
+
+```{r}
+#| label: raise-salary-type-fit
+#| echo: false
+
+raise_3_fit <- linear_reg() |>
+  fit(incr_porcentual ~ salario_anual + tipo_contrato, data = blizzard_salary)
+
+tidy(raise_3_fit)
+```
+
+
+¿Cuál de las siguientes gráficas explica el modelo estimado? Explique su respuesta.
+
+
+El intercepto para las observaciones de los trabajadores con *Contrato Fijo* es $\hat{\beta_0}$ porque $\text{Contrato por Hora}=0$. La recta para este grupo es:
+
+
+$$\widehat{\text{Incremento Porcentual}} = {\color{#E87d72} \hat{\beta_0}} + \hat{\beta_1} \times \text{Salario Anual}$$
+
+
+
+El intercepto para las observaciones de los trabajadores con *Contrato por Hora* es $\hat{\beta_0}+\hat{\beta_2}$ porque $\text{Contrato por Hora}=1$. La recta para este grupo es:
+
+$$
+\widehat{\text{Incremento Porcentual}} = 
+{\color{#56bcc2} \hat{\beta_0}} + 
+\hat{\beta_1} \times \text{Salario Anual} + 
+{\color{#56bcc2} \hat{\beta_2}}
+$$
+
+
+En este caso, $\hat{\beta_2} = -0,9 < 0$, por lo que el intercepto para los trabajadores con *Contrato por Hora* es más bajo. Como la pendiente no cambia, ambas líneas deben ser paralelas. Por todo esto, la gráfica que representa la regresión es la Opción 4:
+
+```{r}
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| out-width: 90%
+
+
+ggplot(blizzard_salary, aes(x = salario_anual, y = incr_porcentual, color = tipo_contrato)) +
+  geom_point(alpha = 0.4) +
+  geom_abline(intercept = 1.24, slope = 0.0000137, color = "#56bcc2", linewidth = 1, linetype = "dashed") +
+  geom_abline(intercept = 1.24+0.913, slope = 0.0000137,  color = "#E87d72", linewidth = 1) +
+  labs(
+    x = "Salario Anual",
+    y = "Incremento Porcentual",
+    color = "Tipo de Contrato"
+  ) +
+  scale_x_continuous(labels = label_dollar()) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
